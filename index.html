@@ -1,9 +1,12 @@
+Warning: truncated output (original token count: 204110)
+Total output lines: 12918
+
 <!doctype html>
 <html lang="sk">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Shogun — Cesta cti · 0.3.9a64 Clean Runtime</title>
+<title>Shogun — Cesta cti · 0.3.9a67 Global Art Bridge</title>
 <style>
 :root{
   --wood:#24150f;--wood2:#3a2117;--wood3:#553323;--gold:#b58a3a;--gold2:#d8b96a;
@@ -2350,7 +2353,7 @@ body.workspace-active033a3 .dashboard-center{align-self:start}
 </main>
 </div>
 <footer>
-Shogun — Cesta cti · Build 0.3.9a64 · Clean Runtime · bez Auth
+Shogun — Cesta cti · Build 0.3.9a67 · Global Art Bridge · bez Auth
 <div class="footer-actions"><button class="btn secondary" onclick="saveGame()">Uložiť</button><button class="btn secondary" onclick="resetGame()">Nová hra</button></div>
 </footer>
 </div>
@@ -6734,305 +6737,7 @@ function addHeadPreviewKit033a75(){
   state.devHeadPreviewA75=true;
   saveGame(true);
   return added;
- }catch(e){console.warn('0.3.3a75 head preview kit:',e);return 0;}
-}
-/* a99 clean build disabled: const _headPreviewAdded033a75=addHeadPreviewKit033a75(); */
-/* a99: head preview toast disabled */
-
-
-// ===== 0.3.3a76 DEV — GLOVES / KOTE ART BATCH + INVENTORY PREVIEW =====
-function addHandsPreviewKit033a76(){
- try{
-  if(!state||state.devHandsPreviewA76)return 0;
-  const ids=['E2104','E2403','E2603','E2803','S32T3','S32Y3','S32A3','S32B3','S32M3'];
-  const bases=[...lootPool032,...setItems032]; let added=0;
-  for(const id of ids){
-   if((state.inventory||[]).some(x=>x&&x.id===id))continue;
-   const base=bases.find(x=>x.id===id); if(!base)continue;
-   const rarity=base.set?'set':(base.rarityBase||'common');
-   const item=rollEndgameItem032(base,rarity); item.visualId=ITEM_ART_BY_ITEM_ID033a65[id]||item.visualId;
-   state.inventory.push(item); added++;
-  }
-  state.inventoryCapacity=Math.max(Number(state.inventoryCapacity)||30,75);
-  state.devHandsPreviewA76=true; saveGame(true); return added;
- }catch(e){console.warn('0.3.3a76 hands preview kit:',e);return 0;}
-}
-/* a99 clean build disabled: const _handsPreviewAdded033a76=addHandsPreviewKit033a76(); */
-/* a99: hands preview toast disabled */
-
-// ===== 0.3.3a85 DEV — CLEAN FOOTWEAR RECROP FIX + INVENTORY PREVIEW =====
-function addFeetPreviewKit033a85(){
- try{
-  if(!state||state.devFeetPreviewA84)return 0;
-  const ids=['E2203','E2704','E2904','S32T4','S32Y4','S32A4','S32B4','S32M4'];
-  const bases=[...lootPool032,...setItems032]; let added=0;
-  for(const id of ids){
-   if((state.inventory||[]).some(x=>x&&x.id===id))continue;
-   const base=bases.find(x=>x.id===id); if(!base)continue;
-   const rarity=base.set?'set':(base.rarityBase||'common');
-   const item=rollEndgameItem032(base,rarity); item.visualId=ITEM_ART_BY_ITEM_ID033a65[id]||item.visualId;
-   state.inventory.push(item); added++;
-  }
-  if(!(state.inventory||[]).some(x=>x&&x.id==='REL-005')){
-   const relic=rollRelic032(relics032.tenguBoots); relic.visualId=ITEM_ART_BY_ITEM_ID033a65['REL-005']; state.inventory.push(relic); added++;
-  }
-  state.inventoryCapacity=Math.max(Number(state.inventoryCapacity)||30,90);
-  state.devFeetPreviewA84=true; saveGame(true); return added;
- }catch(e){console.warn('0.3.3a85 feet preview kit:',e);return 0;}
-}
-/* a99 clean build disabled: const _feetPreviewAdded033a85=addFeetPreviewKit033a85(); */
-// a87: feet preview remains loaded, stale feet DEV toast suppressed
-
-// ===== 0.3.3a86 DEV — MASTER ITEM ART REGISTRY / AUDIT + JEWELRY PREVIEW =====
-const ITEM_ART_SET_FAMILY033a86={tengu32:'tengu',yomi32:'yomi',akagane32:'akagane',blackshogun32:'cierneho_soguna',amaterasu32:'amaterasu'};
-function baseItemById033a86(id){
- const pools=[...(lootPool032||[]),...(setItems032||[])];
- const found=pools.find(x=>x.id===id); if(found)return found;
- if(id==='REL-001')return relics032?.muramasa||null;
- if(id==='REL-002')return relics032?.emperor||null;
- if(id==='REL-003')return relics032?.oniKing||null;
- if(id==='REL-004')return relics032?.amaterasuHeart||null;
- if(id==='REL-005')return relics032?.tenguBoots||null;
- if(id==='UNI-SHO-001')return bossUniques021?.shogun||null;
- return null;
-}
-const MASTER_ITEM_ART_REGISTRY033a86=Object.freeze(Object.fromEntries(Object.entries(ITEM_ART_BY_ITEM_ID033a65).map(([itemId,visualId])=>{
- const item=baseItemById033a86(itemId); const art=ITEM_ART_LIBRARY033a64[visualId]||{};
- return [itemId,{itemId,name:item?.name||art.label||itemId,slot:item?.slot||art.slot||null,rarity:item?.rarityBase||item?.rarity||art.rarity||null,set:item?.set||null,visualId,artPath:art.src||art.plannedPath||null,artReady:!!art.src}];
-})));
-function auditItemArt033a86(){
- const rows=Object.values(MASTER_ITEM_ART_REGISTRY033a86); const issues=[];
- for(const r of rows){
-  const item=baseItemById033a86(r.itemId), art=ITEM_ART_LIBRARY033a64[r.visualId];
-  if(!item)issues.push({itemId:r.itemId,type:'missing-game-item'});
-  if(!art)issues.push({itemId:r.itemId,type:'missing-art-registry',visualId:r.visualId});
-  if(item&&art&&item.slot!==art.slot)issues.push({itemId:r.itemId,type:'slot-mismatch',game:item.slot,art:art.slot});
-  if(item&&art&&item.name!==art.label)issues.push({itemId:r.itemId,type:'name-mismatch',game:item.name,art:art.label});
-  if(item?.set){const family=ITEM_ART_SET_FAMILY033a86[item.set]; if(family&&!String(r.visualId).includes(family))issues.push({itemId:r.itemId,type:'set-family-mismatch',set:item.set,visualId:r.visualId});}
- }
- const bySet={}; for(const r of rows.filter(x=>x.set)){(bySet[r.set]??=[]).push(r.itemId)}
- return {build:'0.3.6a03-dev',mapped:rows.length,ready:rows.filter(x=>x.artReady).length,pending:rows.filter(x=>!x.artReady).map(x=>x.itemId),issues,sets:Object.fromEntries(Object.entries(bySet).map(([k,v])=>[k,{count:v.length,itemIds:v}])),rows};
-}
-window.ITEM_ART_MASTER033a86=MASTER_ITEM_ART_REGISTRY033a86;
-window.auditItemArt033a86=auditItemArt033a86;
-
-function addJewelryPreviewKit033a86(){
- try{
-  if(!state||state.devJewelryPreviewA86)return 0;
-  const ids=['E2103','E2105','E2204','E2404','E2503','E2504','E2604','E2804','E2903','E3004','E3005'];
-  let added=0;
-  for(const id of ids){
-   if((state.inventory||[]).some(x=>x?.id===id))continue;
-   const base=(lootPool032||[]).find(x=>x.id===id); if(!base)continue;
-   const rarity=base.rarityBase||'common'; const item=rollEndgameItem032(base,rarity); item.visualId=ITEM_ART_BY_ITEM_ID033a65[id]||item.visualId;
-   state.inventory.push(item); added++;
-  }
-  state.inventoryCapacity=Math.max(Number(state.inventoryCapacity)||30,105);
-  state.devJewelryPreviewA86=true; saveGame(true); return added;
- }catch(e){console.warn('0.3.3a86 jewelry preview kit:',e);return 0;}
-}
-/* a99 clean build disabled: const _jewelryPreviewAdded033a86=addJewelryPreviewKit033a86(); */
-
-// ===== 0.3.6a03 DEV — MISSING WEAPONS + RELICS PREVIEW =====
-function addWeaponsRelicsPreviewKit033a90(){
- try{
-  if(!state||state.devWeaponsRelicsPreviewA89)return 0;
-  const ids=['E2601','E2701','E2801','E3001']; let added=0;
-  for(const id of ids){
-   if((state.inventory||[]).some(x=>x?.id===id))continue;
-   const base=(lootPool032||[]).find(x=>x.id===id); if(!base)continue;
-   const item=rollEndgameItem032(base,base.rarityBase||'rare'); item.visualId=ITEM_ART_BY_ITEM_ID033a65[id]||item.visualId; state.inventory.push(item); added++;
-  }
-  const relicDefs=[relics032?.emperor,relics032?.oniKing,relics032?.amaterasuHeart];
-  for(const base of relicDefs){ if(!base||state.inventory.some(x=>x?.id===base.id))continue; const item=rollRelic032(base); item.visualId=ITEM_ART_BY_ITEM_ID033a65[base.id]||item.visualId; state.inventory.push(item); added++; }
-  state.devWeaponsRelicsPreviewA89=true; state.inventoryCapacity=Math.max(state.inventoryCapacity||30,120); try{saveGame(false)}catch(e){}; return added;
- }catch(e){console.error('a90 preview',e);return 0}
-}
-/* a99 clean build disabled: const _weaponsRelicsPreviewAdded033a90=addWeaponsRelicsPreviewKit033a90(); */
-
-// ===== 0.3.6a03 DEV — SET AVATAR EQUIP TEST KIT =====
-// Temporary DEV-only helper: all 25 set pieces can be equipped by a level 1 character.
-// Gameplay item definitions / normal drop levels remain untouched; only preview copies are lowered.
-function prepareSetAvatarTestKit033a98(){
- try{
-  if(!state)return 0;
-  const setIds=[
-   'S32T1','S32T2','S32T3','S32T4','S32T5',
-   'S32Y1','S32Y2','S32Y3','S32Y4','S32Y5',
-   'S32A1','S32A2','S32A3','S32A4','S32A5',
-   'S32B1','S32B2','S32B3','S32B4','S32B5',
-   'S32M1','S32M2','S32M3','S32M4','S32M5'
-  ];
-  const bases=(setItems032||[]);
-  let added=0, lowered=0;
-
-  // Lower already-equipped set items too, so a saved DEV state cannot block testing.
-  Object.values(state.equipment||{}).filter(Boolean).forEach(x=>{
-   if(setIds.includes(x.id) && Number(x.level||1)!==1){x.level=1;lowered++;}
-  });
-
-  for(const id of setIds){
-   let item=(state.inventory||[]).find(x=>x?.id===id);
-   if(!item){
-    const base=bases.find(x=>x.id===id); if(!base)continue;
-    item=rollEndgameItem032(base,'set');
-    item.visualId=ITEM_ART_BY_ITEM_ID033a65[id]||item.visualId;
-    state.inventory.push(item); added++;
-   }
-   if
-(Number(item.level||1)!==1){item.level=1;lowered++;}
-   item.devSetAvatarTestA98=true;
-  }
-
-  state.inventoryCapacity=Math.max(Number(state.inventoryCapacity)||30,150);
-  state.devSetAvatarTestA98=true;
-  try{saveGame(false)}catch(e){}
-  return {added,lowered,total:setIds.length};
- }catch(e){console.error('a98 set avatar test kit',e);return {added:0,lowered:0,total:0};}
-}
-/* a99 clean build disabled: const _setAvatarTestA98=prepareSetAvatarTestKit033a98(); */
-
-
-
-// ===== 0.3.6a03 — CLEAN GAMEPLAY FOUNDATION MIGRATION =====
-function cleanDevPreviewState033a99(){
- try{
-  if(!state)return {cleaned:false,removed:0};
-  const hadDevPreview=!!(
-    state.bladeTestKit033a6 ||
-    state.devArmorPreviewA74 || state.devHeadPreviewA75 || state.devHandsPreviewA76 ||
-    state.devFeetPreviewA85 || state.devJewelryPreviewA86 ||
-    state.devWeaponsRelicsPreviewA90 || state.devSetAvatarTestA98
-  );
-  if(!hadDevPreview)return {cleaned:false,removed:0};
-
-  let removed=0;
-  // Remove only explicitly tagged test copies. Do not delete ordinary earned items by ID.
-  state.inventory=(state.inventory||[]).filter(it=>{
-    const isDev=!!(it && (it.testItem033a6 || it.devSetAvatarTestA98));
-    if(isDev)removed++;
-    return !isDev;
-  });
-
-  // Restore any equipped a98 test copy to its real set level instead of deleting it.
-  const realSetLevels={};
-  try{(setItems032||[]).forEach(x=>realSetLevels[x.id]=Number(x.level||1));}catch(e){}
-  Object.values(state.equipment||{}).filter(Boolean).forEach(it=>{
-    if(it.devSetAvatarTestA98 && realSetLevels[it.id]){
-      it.level=realSetLevels[it.id];
-      delete it.devSetAvatarTestA98;
-    }
-  });
-
-  [
-    'bladeTestKit033a6','devArmorPreviewA74','devHeadPreviewA75','devHandsPreviewA76',
-    'devFeetPreviewA85','devJewelryPreviewA86','devWeaponsRelicsPreviewA90',
-    'devSetAvatarTestA98'
-  ].forEach(k=>{try{delete state[k]}catch(e){}});
-
-  // DEV builds inflated capacity only for preview convenience.
-  state.inventoryCapacity=30;
-  try{saveGame(false)}catch(e){}
-  return {cleaned:true,removed};
- }catch(e){
-  console.warn('a99 clean migration:',e);
-  return {cleaned:false,removed:0};
- }
-}
-const _cleanA99=cleanDevPreviewState033a99();
-
-try{normalizeItemArtIds033a65();saveGame(true);}catch(e){}
-const _itemArtAudit033a86=auditItemArt033a86();
-/* a99: jewelry preview toast disabled */
-window.SHOGUN_BUILD='0.3.9a59-pc-art';
-/* Clean player build: the one-time DEV cleanup no longer creates a visible banner. */
-
-
-/* Refresh once so the DEV build opens immediately with the new renderer. */
-try{render();}catch(e){console.warn('0.3.3a64 Item Art refresh:',e)}
-</script>
-
-<script id="a64-clean-item-art-core">
-/* ===== 0.3.9a64 — CLEAN ITEM ART CORE =====
-   Replaces retired development preview/migration code with one safe renderer. */
-(function(){
-  function esc64(value){return String(value??'').replace(/[&<>"']/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]})}
-  function fallbackPath64(item){
-    const slot=String(item&&item.slot||'misc').replace(/[^a-z0-9_-]/gi,'_');
-    const id=String(item&&item.visualId||item&&item.id||'unknown').replace(/[^a-z0-9_-]/gi,'_');
-    return 'assets/items/'+slot+'/'+id+'.webp';
-  }
-  window.itemArtMeta033a64=function(item){
-    const src=item&&(item.artSrc||item.src||item.image||item.artwork||null);
-    return {visualId:item&&item.visualId||item&&item.id||null,src:src,plannedPath:src||fallbackPath64(item),label:item&&item.name||'Predmet'};
-  };
-  window.plannedItemArtPath033a64=function(item){return window.itemArtMeta033a64(item).plannedPath};
-  window.registerItemArt033a64=function(){return false};
-  window.itemArtHTML033a64=function(item){
-    const meta=window.itemArtMeta033a64(item), icon=esc64(item&&item.icon||'◆'), label=esc64(meta.label);
-    if(meta.src)return '<div class="a64itemart"><img src="'+esc64(meta.src)+'" alt="'+label+'" loading="lazy" decoding="async" onerror="this.replaceWith(document.createTextNode(\''+icon+'\'))"></div>';
-    return '<div class="a64itemart a64fallback">'+icon+'</div>';
-  };
-  window.itemArtDetailHTML033a64=window.itemArtHTML033a64;
-  window.itemArtDiagnostic033a64=function(){return {build:'0.3.9a64',mode:'clean-core'}};
-  const style=document.createElement('style');
-  style.textContent='.a64itemart{width:100%;height:100%;min-height:42px;display:grid;place-items:center;overflow:hidden;border-radius:10px;background:radial-gradient(circle at 50% 30%,rgba(236,201,105,.14),rgba(10,13,21,.82))}.a64itemart img{width:100%;height:100%;object-fit:contain;display:block}.a64fallback{font-size:28px;color:#eacb79}';
-  document.head.appendChild(style);
-  window.SHOGUN_A64_CLEAN_ART={build:'0.3.9a64',retired:'development preview and migration pipeline'};
-})();
-</script>
-
-<script>
-// ===== 0.3.3a82 DEV — FULL-SIZE GLOVES / KOTE FRAMING FIX =====
-window.SHOGUN_BUILD_PATCH_A77={category:"head",singleItemCrop:true,correctedArtwork:12};
-window.SHOGUN_BUILD_PATCH_A80={category:"hands",singleItemCrop:true,fullItemVisible:true,tightFraming:true,correctedArtwork:9};
-</script>
-
-<style id="handsWidthSafety033a82">
-/* a81: horizontal safety margin for gloves/kote. Height remains unchanged. */
-.invcell[data-slot="hands"] .item-art-front033a72,
-.slot[data-slot="hands"] .item-art-front033a72{inset:8% 5%;width:90%;height:84%;object-fit:contain;object-position:center;}
-</style>
-<script>window.SHOGUN_BUILD_PATCH_A82={category:"hands",sourceRecrop:true,fullCardWidth:true,horizontalSafetyMargin:true,verticalScalePreserved:true,correctedArtwork:9};</script>
-
-<style id="handsEdgeSafety033a83">
-/* a83: extra right/bottom artwork safety for gloves/kote. Keep approved height, expose more side/bottom space. */
-.invcell[data-slot="hands"] .item-art-front033a72,
-.slot[data-slot="hands"] .item-art-front033a72{inset:7% 3%;width:94%;height:86%;object-fit:contain;object-position:50% 52%;}
-.item-art-detail-media033a64[data-slot="hands"]>.item-art-front033a72{inset:2% 1%;width:98%;height:96%;object-fit:contain;object-position:50% 52%;}
-</style>
-<script>window.SHOGUN_BUILD_PATCH_A83={category:"hands",edgeSafety:true,rightMarginExtended:true,bottomMarginExtended:true,nonGenerativeAssetFix:true,correctedArtwork:9};</script>
-
-<style id="feetArtSafety033a85">
-/* a85: clean per-card footwear recrop; no neighbouring-card bleed, full item visibility preserved. */
-.invcell[data-slot="feet"] .item-art-front033a72,
-.slot[data-slot="feet"] .item-art-front033a72{inset:4%;width:92%;height:92%;object-fit:contain;object-position:center;}
-</style>
-<script>window.SHOGUN_BUILD_PATCH_A84={category:"feet",approvedMagicBatch:true,externalWebP:9,fullItemVisible:true,previewKit:true};</script>
-
-<script>
-window.SHOGUN_BUILD_PATCH_A88={category:"accessories",cleanRecropPreserved:true,tighterFraming:true,highQualityUpscale:true,externalWebP:11,correctedArtwork:11};
-</script>
-
-
-<script>
-window.SHOGUN_CLEAN_FOUNDATION_A99={
-  build:"0.3.6a03",
-  previewAutoGrants:false,
-  normalInventoryCapacity:30,
-  realItemLevels:true,
-  itemArtRegistry:true,
-  staticSetAvatars:true,
-  avatarThresholdPieces:3
-};
-</script>
-
-
-<style id="lootInventoryPolish034">
-.inv-polish-toolbar034{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:8px 7px;border-bottom:1px solid #3e2920;background:rgba(10,7,6,.62)}
-.inv-polish-toolbar034 select{background:#17110d;color:#cdbb9d;border:1px solid #63451f;padding:6px 7px;font-size:10px}
-.inv-polish-toolbar034 .small{margin-left:auto;color:#8e806c}
-.item-compare034{margin-top:10px;padding:9px;border:1px solid #4e3921;background:#0c0907}
+ }catch(e){console.warn('0.3.3a75 head preview kit:',…4110 tokens truncated…solid #4e3921;background:#0c0907}
 .item-compare034 h4,.set-progress034 h4{margin:0 0 7px;color:#d3b478;letter-spacing:1px}
 .compare-row034{display:grid;grid-template-columns:1fr auto;gap:10px;padding:3px 0;border-bottom:1px solid rgba(104,77,43,.25);font-size:11px}
 .compare-up034{color:#83b86b}.compare-down034{color:#cf7568}.compare-even034{color:#8d8375}
@@ -12875,6 +12580,28 @@ body.pc55 #combatPage .pc55-enemy-art{filter:brightness(1.42) saturate(1.18) con
   const baseRender063=render;
   render=function(){normalizeEarlyDropArt063();return baseRender063.apply(this,arguments)};
   window.SHOGUN_A63={build:'0.3.9a63',fix:'explicit verified atlas art for every Lv.1–10 regular and set drop'};
+})();
+</script>
+<script id="a66-equipped-item-art">
+/* ===== 0.3.9a66 — EQUIPPED ITEM ART FIX ===== */
+(function(){
+  const order=['head','neck','weapon','body','hands','feet','ring','token'];
+  const names={head:'HLAVA',neck:'NÁHRDELNÍK',weapon:'ZBRAŇ',body:'TELO',hands:'RUKY',feet:'NOHY',ring:'PRSTEŇ',token:'TALIZMAN'};
+  function esc66(value){return String(value??'').replace(/[&<>"']/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]})}
+  window.renderEquipment=function(){
+    const grid=document.getElementById('equipmentGrid');
+    if(!grid||!window.state)return;
+    grid.innerHTML=order.map(function(slot){
+      const item=state.equipment&&state.equipment[slot];
+      if(!item)return '<div class="slot empty" title="'+names[slot]+'"><div class="small">'+names[slot]+'</div></div>';
+      const art=typeof window.itemArtHTML033a64==='function'?window.itemArtHTML033a64(item):'<div class="a64fallback">'+esc66(item.icon||'◆')+'</div>';
+      return '<div class="slot rarity-'+esc66(item.rarity||'common')+'" title="'+esc66(item.name||names[slot])+'">'+art+'<div class="label rarity-text-'+esc66(item.rarity||'common')+'">'+esc66(item.name||names[slot])+'</div></div>';
+    }).join('');
+  };
+  const oldRender66=render;
+  render=function(){const result=oldRender66.apply(this,arguments);try{window.renderEquipment()}catch(_){ }return result};
+  try{window.renderEquipment()}catch(_){ }
+  window.SHOGUN_A66={build:'0.3.9a66',fix:'equipment grid uses the same verified item renderer as inventory, loot and forge'};
 })();
 </script>
 </body>
