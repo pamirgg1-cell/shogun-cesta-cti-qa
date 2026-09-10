@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Shogun — Cesta cti · 0.3.9a59 Item Art</title>
+<title>Shogun — Cesta cti · 0.3.9a60 Stabilization</title>
 <style>
 :root{
   --wood:#24150f;--wood2:#3a2117;--wood3:#553323;--gold:#b58a3a;--gold2:#d8b96a;
@@ -395,7 +395,8 @@ footer{background:rgba(5,6,7,.97)!important;color:#746a62!important;border-top:1
  border:1px solid #62342c;box-shadow:0 18px 55px rgba(0,0,0,.72),inset 0 0 45px rgba(0,0,0,.7);
  padding:12px;overflow:hidden
 }
-.inventory-overlay032c:before{content:"";position:absolute;inset:5px;border:1px solid rgba(118,63,48,.28);pointer-events:none}
+.inv
+entory-overlay032c:before{content:"";position:absolute;inset:5px;border:1px solid rgba(118,63,48,.28);pointer-events:none}
 .inventory-overlay-head032c{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:4px 7px 10px;border-bottom:1px solid #542b25}
 .inventory-overlay-head032c>div{display:flex;align-items:baseline;gap:18px}
 .inventory-overlay-head032c b{font-family:Georgia;font-size:18px;letter-spacing:2px;color:#dfd0be}
@@ -1271,7 +1272,8 @@ body.workspace-active033a3 .dashboard-center{align-self:start}
 
 
 /* ===== 0.3.3a15 VISUAL FIX ===== */
-.hero-sword-cleanup033a13{display:none!important}
+.hero-sword-cleanup
+033a13{display:none!important}
 .hero-live-weapon033a13{
  left:47.55%!important;
  top:54.15%!important;
@@ -2221,7 +2223,7 @@ body.workspace-active033a3 .dashboard-center{align-self:start}
 
 
 <section id="training" class="hidden"><div class="panel"><h2>Dódžó — Tréning</h2><div class="pad">
-  <div class="notice">Každý atribút začína na hodnote 5. Prvý tréning stojí 1 zlato a cena postupne rastie.</div>
+  <div class="notice">Každý atribút začína na hodnote 5. Prvý tréning v aktuálnom balanse stojí 4 zlata a cena postupne rastie.</div>
   <div class="notice">Balans 0.2.3b: na Lv.1 začínaš s 5 bodmi a môžeš každý atribút vytrénovať až na 10. Strop rastie s úrovňou až na 500 pri Lv.30.</div><div id="trainingList"></div>
 </div></div></section>
 
@@ -2348,7 +2350,7 @@ body.workspace-active033a3 .dashboard-center{align-self:start}
 </main>
 </div>
 <footer>
-Shogun — Cesta cti · Build 0.3.9a59 · Item Art · bez Auth
+Shogun — Cesta cti · Build 0.3.9a60 · Stabilization · bez Auth
 <div class="footer-actions"><button class="btn secondary" onclick="saveGame()">Uložiť</button><button class="btn secondary" onclick="resetGame()">Nová hra</button></div>
 </footer>
 </div>
@@ -2389,7 +2391,8 @@ const locations=[
   ["Líščí duch","狐",89],["Rónin Momiji","侍",101],["Ohnivá Kitsune","火",115],["Strážca červeného javora","楓",130]]},
  {id:"akagane",name:"Ruiny Akagane",level:30,intro:"Pozostatky mesta, ktorého vojaci odmietli opustiť svoju poslednú stráž.",enemies:[
   ["Prekliaty vojak","兵",112],["Nemŕtvy samuraj","侍",127],["Gashadokuro","骨",144],["Pán ruín Akagane","城",163]]},
- {id:"tengu",name:"Hora Tengu",level:35,intro:"Vysokohorská svätyňa, kde vietor prináša krik krídel a zvuk čepele.",enemies:[
+ {id:"tengu",
+name:"Hora Tengu",level:35,intro:"Vysokohorská svätyňa, kde vietor prináša krik krídel a zvuk čepele.",enemies:[
   ["Horský Yamabushi","僧",138],["Karasu-Tengu","烏",156],["Dai-Tengu","天",177],["Veľmajster Sōjōbō","僧",200]]},
  {id:"yomi",name:"Prekliaty les Yomi",level:40,intro:"Les blízko ríše mŕtvych. Každý krok vedie hlbšie do temnoty.",enemies:[
   ["Blúdiaca duša","魂",168],["Onryō","怨",190],["Jubokko","樹",215],["Strážca brány Yomi","門",243]]},
@@ -2788,7 +2791,8 @@ function brew021(i){let r=recipes021[i];if(state.gold<r.cost)return toast('Nemá
 function marketOffers021(){let all=[...catalog.weapons,...catalog.armor,...catalog.general,...catalog.jewels];return [0,1,2,3].map(i=>clone(all[(state.marketSeed*3+i*5)%all.length]))}
 function renderMarket021(){let e=document.getElementById('market021');if(!e)return;e.innerHTML='<div class="system-grid">'+marketOffers021().map((x,i)=>`<div class="system-card"><h3 class="rarity-text-${x.rarity}">${x.name}</h3><p>${itemBonuses(x)}</p><button class="btn" onclick="marketBuy021(${i})">KÚPIŤ · ${Math.floor(x.price*1.15)} zlata</button></div>`).join('')+'</div><br><button class="btn secondary" onclick="state.marketSeed++;renderMarket021();saveGame(true)">NOVÉ PONUKY</button>'}
 function marketBuy021(i){let x=marketOffers021()[i],c=Math.floor(x.price*1.15);if(state.gold<c)return toast('Nemáš dosť zlata.','danger');if(state.inventory.length>=30)return toast('Batoh je plný.','danger');state.gold-=c;state.inventory.push(ensureItemData(x));render();renderMarket021()}
-function renderAuction021(){let e=document.getElementById('auction021');if(!e)return;let x=bossUniques021.monks,b=Math.max(300,state.auctionBid||300);e.innerHTML=`<div class="system-card"><h3 class="rarity-text-legendary">${x.name}</h3><p>NPC aukcia · aktuálna ponuka ${b} zlata.</p><button class="btn" onclick="bidAuction021()">PRIHODIŤ ${b+100}</button><p class="small">Pravidlo Shogunu: prihodená suma sa pri prehodení nevracia.</p></div>`}
+function renderAuction021(){let e=document.getElementById('auction021');if(!e)return;let x=bossUniques021.monks,b=Math.max(300,
+state.auctionBid||300);e.innerHTML=`<div class="system-card"><h3 class="rarity-text-legendary">${x.name}</h3><p>NPC aukcia · aktuálna ponuka ${b} zlata.</p><button class="btn" onclick="bidAuction021()">PRIHODIŤ ${b+100}</button><p class="small">Pravidlo Shogunu: prihodená suma sa pri prehodení nevracia.</p></div>`}
 function bidAuction021(){let b=Math.max(300,state.auctionBid||300)+100;if(state.gold<b)return toast('Nemáš dosť zlata na ponuku.','danger');state.gold-=b;state.auctionBid=b;toast(`Ponuka ${b} zlata bola prijatá.`,'success');render();renderAuction021()}
 function renderClan021(){let e=document.getElementById('clan021');if(!e)return;if(!state.clan.name)e.innerHTML='<div class="system-card"><h3>Založiť klan</h3><input id="clanName021" class="select" placeholder="Názov klanu"><button class="btn" onclick="createClan021()">ZALOŽIŤ ZA 500 ZLATA</button></div>';else e.innerHTML=`<div class="system-card"><h3>${state.clan.name}</h3><div>Úroveň klanu: ${state.clan.level}</div><div>Klanová česť: ${state.clan.honor}</div><p>Členovia: Shogun · Akira (NPC) · Ren (NPC)</p><button class="btn" onclick="donateClan021()">DAROVAŤ 100 ZLATA</button></div>`}
 function createClan021(){let n=document.getElementById('clanName021').value.trim();if(!n)return;if(state.gold<500)return toast('Potrebuješ 500 zlata.','danger');state.gold-=500;state.clan.name=n;render();renderClan021()}
@@ -3401,7 +3405,8 @@ function finishBattle031(win){
   battleEvent031(`PORÁŽKA — prebudil si sa s 1 HP.`,"danger");
   addBattleLog031(`<span class="death">Tvoje HP kleslo na 0. Súboj je prehratý. Po boji máš 1 HP.</span>`);
  }
- b.finished=true;
+ 
+b.finished=true;
  state.lastHpRegen=Date.now();
  updatePersistentHealthUI031();
  const rewardText=win?`+${gold} zlata · +${xp} XP · +${honor} Česť`:`Symbolická odmena za pokus: +${gold} zlata · +${xp} XP`;
@@ -4016,7 +4021,8 @@ function bladeSpec033a4(item){
 }
 function guardShape033a4(type,cx,cy,color){
  if(type==="square")return `<rect x="${cx-11}" y="${cy-3}" width="22" height="6" rx="1.5" fill="${color}" stroke="#241714" stroke-width="1.2"/>`;
- if(type==="mokko")return `<path d="M${cx-12},${cy} C${cx-8},${cy-7} ${cx-3},${cy-7} ${cx},${cy-3} C${cx+3},${cy-7} ${cx+8},${cy-7} ${cx+12},${cy} C${cx+8},${cy+7} ${cx+3},${cy+7} ${cx},${cy+3} C${cx-3},${cy+7} ${cx-8},${cy+7} ${cx-12},${cy}Z" fill="${color}" stroke="#241714" stroke-width="1.2"/>`;
+ if(type==="mokko")return `<path d="M${cx-12},${cy} C${cx-8},${cy-7} ${
+cx-3},${cy-7} ${cx},${cy-3} C${cx+3},${cy-7} ${cx+8},${cy-7} ${cx+12},${cy} C${cx+8},${cy+7} ${cx+3},${cy+7} ${cx},${cy+3} C${cx-3},${cy+7} ${cx-8},${cy+7} ${cx-12},${cy}Z" fill="${color}" stroke="#241714" stroke-width="1.2"/>`;
  if(type==="crescent")return `<path d="M${cx-12},${cy+2} Q${cx},${cy-10} ${cx+12},${cy+2} Q${cx},${cy-3} ${cx-12},${cy+2}Z" fill="${color}" stroke="#241714" stroke-width="1.2"/>`;
  if(type==="lotus")return `<path d="M${cx},${cy-8} L${cx+5},${cy-3} L${cx+12},${cy} L${cx+5},${cy+3} L${cx},${cy+8} L${cx-5},${cy+3} L${cx-12},${cy} L${cx-5},${cy-3}Z" fill="${color}" stroke="#241714" stroke-width="1.1"/>`;
  if(type==="wing")return `<path d="M${cx-14},${cy+3} Q${cx-7},${cy-8} ${cx},${cy-1} Q${cx+7},${cy-8} ${cx+14},${cy+3} Q${cx+6},${cy+1} ${cx},${cy+5} Q${cx-6},${cy+1} ${cx-14},${cy+3}Z" fill="${color}" stroke="#241714" stroke-width="1.1"/>`;
@@ -5110,7 +5116,8 @@ setTimeout(()=>syncHeroLiveWeapon033a13(),200);
 const syncHeroLiveWeaponBefore033a35 = syncHeroLiveWeapon033a13;
 syncHeroLiveWeapon033a13 = function(){
   syncHeroLiveWeaponBefore033a35();
-  const layer=document.getElementById("heroLiveWeapon033a13");
+  co
+nst layer=document.getElementById("heroLiveWeapon033a13");
   if(!layer)return;
 
   const n=String(state?.equipment?.weapon?.name||"").toLowerCase();
@@ -6331,7 +6338,8 @@ currentOffers=function(){
  return all.slice(shopPage033a3*SHOP_PAGE_SIZE033a3,(shopPage033a3+1)*SHOP_PAGE_SIZE033a3);
 };
 function setShopPage033a3(p){
- const pages=Math.max(1,Math.ceil(allShopOffers033a3().length/SHOP_PAGE_SIZE033a3));
+ const pages=Math.max(1,Math.ceil(allShopOffers033a3().leng
+th/SHOP_PAGE_SIZE033a3));
  shopPage033a3=Math.max(0,Math.min(Number(p)||0,pages-1));
  renderShop();saveGame(true);
 }
@@ -6679,7 +6687,7 @@ itemArtDiagnostic033a64=function(){
  const cat=weaponArtCatalog033a65();
  const armor=Object.entries(ITEM_ART_LIBRARY033a64).filter(([,m])=>m.slot==='body'); const head=Object.entries(ITEM_ART_LIBRARY033a64).filter(([,m])=>m.slot==='head'); const hands=Object.entries(ITEM_ART_LIBRARY033a64).filter(([,m])=>m.slot==='hands'); const feet=Object.entries(ITEM_ART_LIBRARY033a64).filter(([,m])=>m.slot==='feet'); const accessories=Object.entries(ITEM_ART_LIBRARY033a64).filter(([,m])=>['ring','neck','extra'].includes(m.slot)); return {...base,build:'0.3.6a03-dev',weaponCatalog:cat.length,weaponArtworkReady:cat.filter(x=>x.ready).length,armorCatalog:armor.length,armorArtworkReady:armor.filter(([,m])=>!!m.src).length,headCatalog:head.length,headArtworkReady:head.filter(([,m])=>!!m.src).length,handsCatalog:hands.length,handsArtworkReady:hands.filter(([,m])=>!!m.src).length,feetCatalog:feet.length,feetArtworkReady:feet.filter(([,m])=>!!m.src).length,accessoryCatalog:accessories.length,accessoryArtworkReady:accessories.filter(([,m])=>!!m.src).length,canonicalIds:true};
 };
-try{normalizeItemArtIds033a65();save();}catch(e){console.warn('0.3.3a68 art id migration:',e)}
+try{normalizeItemArtIds033a65();saveGame(true);}catch(e){console.warn('0.3.3a68 art id migration:',e)}
 
 
 
@@ -6822,7 +6830,7 @@ function addJewelryPreviewKit033a86(){
    state.inventory.push(item); added++;
   }
   state.inventoryCapacity=Math.max(Number(state.inventoryCapacity)||30,105);
-  state.devJewelryPreviewA86=true; save(); return added;
+  state.devJewelryPreviewA86=true; saveGame(true); return added;
  }catch(e){console.warn('0.3.3a86 jewelry preview kit:',e);return 0;}
 }
 /* a99 clean build disabled: const _jewelryPreviewAdded033a86=addJewelryPreviewKit033a86(); */
@@ -6873,7 +6881,8 @@ function prepareSetAvatarTestKit033a98(){
     item.visualId=ITEM_ART_BY_ITEM_ID033a65[id]||item.visualId;
     state.inventory.push(item); added++;
    }
-   if(Number(item.level||1)!==1){item.level=1;lowered++;}
+   if
+(Number(item.level||1)!==1){item.level=1;lowered++;}
    item.devSetAvatarTestA98=true;
   }
 
@@ -6934,7 +6943,7 @@ function cleanDevPreviewState033a99(){
 }
 const _cleanA99=cleanDevPreviewState033a99();
 
-try{normalizeItemArtIds033a65();save();}catch(e){}
+try{normalizeItemArtIds033a65();saveGame(true);}catch(e){}
 const _itemArtAudit033a86=auditItemArt033a86();
 /* a99: jewelry preview toast disabled */
 window.SHOGUN_BUILD='0.3.9a59-pc-art';
@@ -7558,7 +7567,8 @@ const BOSS_REWARD_IDENTITY036A03={
  bamboo:{theme:"Tieň shinobi",unique:"Tajomná korisť Majstra Shinobi",relic:null},
  kuro:{theme:"Kliatba močiarov",unique:"Tajomná korisť Mizuchi",relic:null},
  fallen:{theme:"Padlí samuraji",unique:"Tajomná korisť Generála",relic:null},
- oni:{theme:"Krv démonov",unique:"Maska Oni",relic:"REL-003"},
+ oni:{theme:"Krv démonov",unique:"Maska Oni",relic:"REL-003"}
+,
  maples:{theme:"Červený javor",unique:"Tajomná korisť Strážcu",relic:null},
  akagane:{theme:"Železo Akagane",unique:"Tajomná korisť Pána ruín",relic:"REL-002"},
  tengu:{theme:"Vietor Tengu",unique:"Tajomná korisť Sōjōbō",relic:"REL-005"},
@@ -8332,7 +8342,8 @@ window.SHOGUN_UI_038A04={
  build:"0.3.8a04",
  leftPanel:["attributes","health","attack","armor","crit","critDamage","block","regen","training","statDetails"],
  rightPanel:["quickActions","equipment"],
- trainingWorkspace:true
+ trainingWorks
+pace:true
 };
 </script>
 
@@ -9367,7 +9378,8 @@ window.longTermTelemetry039a08=longTermTelemetry039a08;
 window.progressionSnapshot039a08=progressionSnapshot039a08;
 window.progressionCurve039a08=progressionCurve039a08;
 window.SHOGUN_SINGLEPLAYER_039A08={
- build:"0.3.9a08",
+ build:"0.3.9
+a08",
  target:"Lv60 in ~3–6 months at 2–3 h/day",
  normalTargetHours:"300–400",
  xpTo60:Math.round(Array.from({length:59},(_,i)=>BALANCE039A08.xpNeed(i+1)).reduce((a,b)=>a+b,0)),
@@ -10259,7 +10271,8 @@ function expandedShopPool039a17(type=state.shopType){
  return eligible;
 }
 function currentOffers039a17(){
- const type=state.shopType||"general",pool=expandedShopPool039a17(type),seed=shopSeed039a17(type);
+ const type=stat
+e.shopType||"general",pool=expandedShopPool039a17(type),seed=shopSeed039a17(type);
  let offers=shuffled039a17(pool,seed).slice(0,SHOP_REFRESH039A17.offerCount);
  // Guarantee >=10 visible cards even in legacy small catalogs by generating
  // merchant variants from that shop's legitimate base stock.
@@ -10816,7 +10829,8 @@ function forgeDetail039a26(o){
   <div class="forge-a26-row"><span>Bonus kovania</span><b class="forge-good035">+${p}%</b></div>
   <div class="forge-a26-row"><span>Bonusy predmetu</span><b>${typeof itemBonuses==="function"?itemBonuses(x):"—"}</b></div>
   ${n<max?`<div class="forge-a26-costs"><span>Zlato <b>${c.gold}</b></span><span>Železo <b>${c.iron}</b></span><span>Koža <b>${c.leather}</b></span><span>Esencia <b>${c.essence}</b></span><span>Pečať <b>${c.seal}</b></span></div>
-  <button class="btn ${ok?"":"secondary"}" onclick="upgradeForge035()" ${ok?"":"disabled"}>VYLEPŠIŤ NA +${n+1}</button>
+  <button class="btn ${ok?"":"s
+econdary"}" onclick="upgradeForge035()" ${ok?"":"disabled"}>VYLEPŠIŤ NA +${n+1}</button>
   <div class="small ${ok?"forge-good035":"forge-bad035"}" style="margin-top:7px">${ok?"Materiály pripravené.":"Chýba zlato alebo materiály."}</div>`:`<div class="notice success" style="margin-top:12px">Predmet dosiahol maximum +${max}.</div>`}
  </div>`;
 }
@@ -11411,7 +11425,8 @@ window.SHOGUN_SHOP_LAYOUT_039A35={build:"0.3.9a39",isolatedClasses:true};
 #shopList .x36title{display:block!important;margin:0 0 5px!important;font-size:13px!important;line-height:1.2!important;white-space:normal!important;word-break:normal!important;overflow-wrap:break-word!important}
 #shopList .x36stats{display:block!important;font-size:9px!important;line-height:1.4!important;color:#aa9a82!important;white-space:normal!important;word-break:normal!important;overflow-wrap:break-word!important}
 #shopList .x36quality{display:inline-block!important;margin-top:5px!important;padding:2px 5px!important;border:1px solid #604827!important;color:#d7ba7d!important;font-size:8px!important}
-#shopList .x36side{display:flex!important;flex-direction:column!important;gap:8px!important;align-items:stretch!important;justify-content:center!important;width:120px!important;position:static!important}
+#shopList .x36side{display:flex!important;flex-direction:column!important;gap:8px!important;align-items:stretch!important;justify-content:center!important;width:120px!importa
+nt;position:static!important}
 #shopList .x36price{display:block!important;text-align:center!important;font-size:11px!important;font-weight:800!important;color:#e1c083!important;white-space:nowrap!important}
 #shopList .x36buy{display:block!important;width:100%!important}
 #shop .shophead{display:none!important}
@@ -12173,7 +12188,8 @@ function applyJourneyQaPreview039a46(){
   const required=Math.max(2,Math.min(60,Number(gate[1])||2));
   current=Math.max(1,locations.findIndex(l=>Number(l.level||1)>=required));level=Math.max(1,Number(locations[current].level||required)-1);
  }else{
-  level=Math.max(1,Math.min(60,Math.floor(Number(raw)||1)));
+  level=Math.m
+ax(1,Math.min(60,Math.floor(Number(raw)||1)));
   for(let i=0;i<locations.length;i++)if(Number(locations[i].level||1)<=level)current=i;
  }
  for(let i=0;i<current;i++)for(let ei=0;ei<(locations[i].enemies||[]).length;ei++)defeated[locations[i].id+":"+ei]=true;
@@ -12538,7 +12554,8 @@ body.pc55 header .resources-left032b{left:0!important;right:auto!important}body.
 body.pc55 .layout{display:block!important}body.pc55 #nav{position:relative!important;top:auto!important;display:flex!important;justify-content:center!important;gap:0!important;padding:0 12%!important;min-height:46px!important;background:linear-gradient(#131317,#08090b)!important;border-bottom:1px solid #86633b!important}
 body.pc55 #nav button{flex:1!important;min-height:46px!important;background:transparent!important;color:#d9c398!important;border:0!important;border-left:1px solid #51402a!important;font-size:13px!important;letter-spacing:1px!important}
 body.pc55 #nav button.active,body.pc55 #nav button:hover{background:linear-gradient(#652921,#2d1110)!important;color:#ffe2ac!important}
-body.pc55 main{padding:0 14px 14px!important;margin:0!important}body.pc55 #toast{width:auto!important;max-width:none!important;margin:7px 0!important;padding:7px 12px!important;min-height:28px!important;font-size:12px!important;background:#111215!important;border-color:#705235!important}
+body.pc55 main{padding:0 14px 14px!important;margin:0!important}body.pc55 #toast{
+width:auto!important;max-width:none!important;margin:7px 0!important;padding:7px 12px!important;min-height:28px!important;font-size:12px!important;background:#111215!important;border-color:#705235!important}
 body.pc55 #overview.new-dashboard{display:grid!important;grid-template-columns:minmax(220px, .8fr) minmax(580px,2.35fr) minmax(260px,1fr)!important;gap:12px!important;align-items:start!important;padding:0!important}
 body.pc55 .dashboard-left,body.pc55 .dashboard-right{display:flex!important;flex-direction:column!important;gap:12px!important;min-width:0!important;width:auto!important}
 body.pc55 .dashboard-center{min-width:0!important}body.pc55 .dashboard-right .quick-actions-promoted038a04{order:2!important}
@@ -12685,5 +12702,102 @@ const item59Observer=new MutationObserver(records=>{
 item59Observer.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['src']});
 item59Upgrade(document);
 window.SHOGUN_ITEM59={build:'0.3.9a59',mappedSources:Object.keys(ITEM59_TILES).length};
-</script></body>
+</script><style id="a60-stabilization">
+/* 0.3.9a60 — canonical item, combat and presentation repairs */
+body.pc55 .forge-a26-cell .item59-sprite,
+body.pc55 .forge-a26-cell .item60-fallback,
+body.pc55 .forge-a26-detail .item59-sprite,
+body.pc55 .forge-a26-detail .item60-fallback{
+  display:block!important;width:64px!important;height:64px!important;min-width:64px!important;min-height:64px!important;
+  max-width:100%!important;max-height:100%!important;aspect-ratio:1/1!important;overflow:visible!important
+}
+body.pc55 .forge-a26-cell .item-art-frame033a64,
+body.pc55 .forge-a26-detail .item-art-frame033a64{display:grid!important;place-items:center!important;width:72px!important;height:72px!important;min-height:72px!important}
+.item60-fallback{display:block;width:100%;height:100%;min-width:44px;min-height:44px;border:1px solid #72522d;background:#11151b}
+body.pc55 #heroScene033a9[data-avatar-art] .static-avatar-art033a91{background:radial-gradient(circle at 50% 35%,#3b4050 0,#101724 63%,#090c12 100%)!important}
+body.pc55 #heroScene033a9[data-avatar-art] .static-avatar-art033a91 img{object-fit:cover!important;object-position:center 34%!important;background:transparent!important}
+body.pc55 #combatPage .enemy-combatant .combat-avatar-placeholder{background:#273344!important;box-shadow:0 0 0 1px #8a6a38,inset 0 0 30px #9e7d42!important}
+body.pc55 #combatPage .pc55-enemy-art{filter:brightness(1.42) saturate(1.18) contrast(1.06)!important}
+.a60-arena-summary{margin:12px 0;padding:10px 12px;border:1px solid #644a29;background:linear-gradient(90deg,#17100b,#25170e);font-size:11px;color:#d9c3a0}
+</style>
+<script id="a60-stabilization">
+/* ===== 0.3.9a60 — STABILIZATION BUILD ===== */
+(function(){
+  const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  function fallbackKind(x){
+    const v=String(x?.slot||x?.type||"other").toLowerCase();
+    if(/weapon|zbran/.test(v))return ["⚔","WEAPON"];
+    if(/head|helm|prilb/.test(v))return ["⛑","HEAD"];
+    if(/body|armor|brnen/.test(v))return ["⬟","ARMOR"];
+    if(/hand|glove|ruk/.test(v))return ["✦","HANDS"];
+    if(/feet|boot|nohy/.test(v))return ["⌁","FEET"];
+    if(/ring|prsten/.test(v))return ["◉","RING"];
+    if(/neck|amulet|nahrd/.test(v))return ["◆","AMULET"];
+    if(Number(x?.heal)>0)return ["✚","FOOD"];
+    return ["✦","ITEM"];
+  }
+  function fallbackArt(x,cls=""){
+    const [icon,label]=fallbackKind(x),r=String(x?.rarity||"common").toLowerCase();
+    const hue={common:"#a88f6b",uncommon:"#71a77d",rare:"#669fc2",epic:"#9a70bf",legendary:"#d0a54c",set:"#c36f9b",unique:"#d46c48",relic:"#dfc46b"}[r]||"#a88f6b";
+    return '<svg class="item60-fallback '+esc(cls)+'" role="img" aria-label="'+esc(x?.name||"Predmet")+'" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="a60g" cx="50%" cy="35%"><stop stop-color="'+hue+'" stop-opacity=".58"/><stop offset="1" stop-color="#10151d"/></radialGradient></defs><rect width="100" height="100" rx="7" fill="url(#a60g)"/><path d="M10 87 L50 9 L90 87 Z" fill="none" stroke="'+hue+'" stroke-opacity=".7"/><text x="50" y="59" text-anchor="middle" font-size="38" fill="#f0dfbd">'+icon+'</text><text x="50" y="88" text-anchor="middle" font-family="serif" font-size="8" fill="#ead4a8">'+label+'</text></svg>';
+  }
+  const itemArtHTML060Base=window.itemArtHTML033a64;
+  window.itemArtHTML033a64=function(x,extra=""){
+    const m=typeof window.itemArtMeta033a64==="function"?window.itemArtMeta033a64(x):null;
+    if(m&&m.src&&typeof window.item59Sprite==="function"&&window.ITEM59_TILES&&window.ITEM59_TILES[m.src])return window.item59Sprite(m.src,extra,x?.name||"Predmet");
+    if(m&&m.src&&itemArtHTML060Base)return itemArtHTML060Base.apply(this,arguments);
+    return fallbackArt(x,extra);
+  };
+  function upgradeUnknownArt(root=document){
+    root.querySelectorAll?.("img.item-art-img033a64, img.item-art-front033a72").forEach(img=>{
+      const src=img.getAttribute("src")||"";
+      if(src||img.dataset.a60Fallback)return;
+      img.dataset.a60Fallback="1";
+      const wrap=document.createElement("span");wrap.innerHTML=fallbackArt({name:img.alt,slot:img.dataset.slot||""},img.className);
+      img.replaceWith(wrap.firstElementChild);
+    });
+  }
+  new MutationObserver(rs=>rs.forEach(r=>r.addedNodes.forEach(n=>{if(n.nodeType===1)upgradeUnknownArt(n)}))).observe(document.body,{childList:true,subtree:true});
+  upgradeUnknownArt();
+
+  // Canonical offline arena persistence. Existing reward calculation is retained, while counters
+  // and the journal snapshot are now updated from the same resolved result.
+  window.arenaFight039a48=function(){
+    const a=arenaEnsure039a48();
+    if(a.fights>=5)return toast("Denný limit: 5 arénových zápasov. Obnoví sa o polnoci.","danger");
+    const opponent=arenaOpponent039a48(a.selected||0),profile=arenaProfile039a48();
+    const result=arenaResolve039a48(profile,opponent,arenaSeed039a48(opponent.id+"|"+a.fights+"|"+profile.rating));
+    a.fights++;
+    if(result.won){a.wins++;a.rating+=18;state.honor=(state.honor||0)+2;state.gold=(state.gold||0)+12;gainXP(9)}
+    else {a.losses++;a.rating=Math.max(100,(a.rating||1000)-8);state.hp=Math.max(1,(state.hp||1)-Math.max(3,Math.floor((state.maxhp||100)*.04)))}
+    const line=(result.won?"VÍŤAZSTVO":"PREHRA")+" · "+opponent.name+" (Lv "+opponent.level+") · sila "+result.player+" : "+result.enemy;
+    a.log.unshift(line);a.log=a.log.slice(0,6);
+    state.arenaJournal060=state.arenaJournal060||{matches:0,wins:0,losses:0};
+    state.arenaJournal060.matches++; if(result.won)state.arenaJournal060.wins++; else state.arenaJournal060.losses++;
+    state.reports=state.reports||{fight:[],expedition:[]};
+    state.reports.fight.unshift(new Date().toLocaleString("sk-SK")+": Aréna (offline tieň) — "+line+".");
+    saveGame(true);arenaRefreshHud039a48();renderArena039a48();
+    if(typeof renderJournal038==="function"){try{renderJournal038("journey")}catch(e){}}
+    toast(result.won?"Víťazstvo v aréne! +2 cti, +12 zlata.":"Prehra v aréne. Taktiku môžeš upraviť.",result.won?"success":"danger");
+    return result;
+  };
+  const journal060Base=window.renderJournal038;
+  if(typeof journal060Base==="function")window.renderJournal038=function(tab){
+    const r=journal060Base.apply(this,arguments),a=state.arenaJournal060||{matches:0,wins:0,losses:0};
+    const host=document.getElementById("journalPage");
+    if(host&&!host.querySelector(".a60-arena-summary"))host.insertAdjacentHTML("afterbegin",'<div class="a60-arena-summary"><b>ARÉNA DNES</b> · Zápasy '+a.matches+' · Výhry '+a.wins+' · Prehry '+a.losses+'</div>');
+    return r;
+  };
+  // Update the misleading early training sentence without changing the current balance formula.
+  function repairTrainingCopy(){
+    document.querySelectorAll(".notice").forEach(n=>{if(n.textContent.includes("Prvý tréning stojí 1 zlato"))n.textContent="Každý atribút začína na hodnote 5. Prvý tréning v aktuálnom balanse stojí 4 zlata a cena postupne rastie.";});
+  }
+  new MutationObserver(repairTrainingCopy).observe(document.body,{childList:true,subtree:true});
+  repairTrainingCopy();
+  window.SHOGUN_A60={build:"0.3.9a60",fixes:["canonical fallback item art","forge SVG sizing","arena counters and journal","avatar and enemy contrast","training copy"]};
+})();
+</script>
+
+</body>
 </html>
+
