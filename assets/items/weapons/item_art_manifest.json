@@ -1,0 +1,99 @@
+{
+  "weapon_katana_siveho_ronina": {
+    "file": "katana_siveho_ronina.webp",
+    "status": "approved-production-art",
+    "rarity": "common",
+    "bytes": 185628
+  },
+  "weapon_muramasa_posledna_cepel": {
+    "file": "muramasa_posledna_cepel.webp",
+    "status": "approved-production-art",
+    "rarity": "relic",
+    "bytes": 178210
+  },
+  "weapon_cepel_bambusoveho_tiena": {
+    "file": "cepel_bambusoveho_tiena.webp",
+    "status": "approved-production-art",
+    "rarity": "uncommon",
+    "bytes": 118070
+  },
+  "build": "0.3.3a90-dev",
+  "weapon_krvava_wakizashi": {
+    "file": "krvava_wakizashi.webp",
+    "status": "approved-production-art",
+    "rarity": "rare",
+    "bytes": 108950
+  },
+  "weapon_cepel_mesacneho_svitu": {
+    "file": "cepel_mesacneho_svitu.webp",
+    "status": "approved-production-art",
+    "rarity": "epic",
+    "bytes": 131414
+  },
+  "weapon_katana_akagane": {
+    "file": "katana_akagane.webp",
+    "status": "approved-production-art",
+    "rarity": "legendary",
+    "bytes": 132512
+  },
+  "weapon_cepel_tengu": {
+    "file": "cepel_tengu.webp",
+    "status": "approved-production-art",
+    "rarity": "set",
+    "bytes": 115486
+  },
+  "weapon_katana_yomi": {
+    "file": "katana_yomi.webp",
+    "status": "approved-production-art",
+    "rarity": "set",
+    "bytes": 104610
+  },
+  "weapon_katana_akagane_set": {
+    "file": "katana_akagane_set.webp",
+    "status": "approved-production-art",
+    "rarity": "set",
+    "bytes": 132512
+  },
+  "weapon_katana_cierneho_soguna_set": {
+    "file": "katana_cierneho_soguna_set.webp",
+    "status": "approved-production-art",
+    "rarity": "set",
+    "bytes": 123380
+  },
+  "weapon_cepel_amaterasu": {
+    "file": "cepel_amaterasu.webp",
+    "status": "approved-production-art",
+    "rarity": "set",
+    "bytes": 151024
+  },
+  "weapon_katana_cierneho_soguna": {
+    "file": "katana_cierneho_soguna.webp",
+    "status": "approved-production-art",
+    "rarity": "legendary",
+    "bytes": 123380
+  },
+  "weapon_katana_popraveneho_ronina": {
+    "file": "katana_popraveneho_ronina.webp",
+    "status": "approved-production-art-a90",
+    "rarity": "rare",
+    "bytes": 95106
+  },
+  "weapon_kurogane_katana_bez_pana": {
+    "file": "kurogane_katana_bez_pana.webp",
+    "status": "approved-production-art-a90",
+    "rarity": "legendary",
+    "bytes": 112292
+  },
+  "weapon_cepel_cierneho_lotosu": {
+    "file": "cepel_cierneho_lotosu.webp",
+    "status": "approved-production-art-a90",
+    "rarity": "epic",
+    "bytes": 109360
+  },
+  "weapon_katana_cisarskeho_sumraku": {
+    "file": "katana_cisarskeho_sumraku.webp",
+    "status": "approved-production-art-a90",
+    "rarity": "legendary",
+    "bytes": 117076
+  }
+}
