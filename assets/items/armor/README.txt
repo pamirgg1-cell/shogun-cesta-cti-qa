@@ -1,0 +1,1 @@
+Shogun – Cesta cti | 0.3.3a73 Armor Art Batch DEV\nSchválený smer: torso/chestplate + ramená/rukávy, bez hláv a nôh.\nCieľ: 100–200 kB WebP/item.\nZdroj: schválený armor batch koncept.\n
