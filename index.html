@@ -2581,7 +2581,7 @@ function render(){
 function train(k){
  const cap=trainingCap();if(state.attrs[k]>=cap)return toast(`Tréningový strop pre úroveň ${state.level} je ${cap}.`,"danger");
  const c=trainingCost(k);if(state.gold<c)return toast("Nemáš dosť zlata na tréning.","danger");
- state.gold-=c;state.attrs[k]++;toast(`${attrNames[k]} zvýšená na ${state.attrs[k]}.`,"success");render();
+ state.gold-=c;state.attrs[k]++;saveGame(true);toast(`${attrNames[k]} zvýšená na ${state.attrs[k]}.`,"success");render();
 }
 function renderEquipment(){
  const order=["head","neck","weapon","body","hands","feet","ring","token","extra"];
