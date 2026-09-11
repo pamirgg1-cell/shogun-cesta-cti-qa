@@ -10887,6 +10887,7 @@ function equip039a32(index){
  if(!slot||!(slot in (state.equipment||{}))){if(typeof toast==="function")toast("Tento predmet sa nedá nasadiť.","danger");return false}
  if(Number(x.level||1)>Number(state.level||1)){if(typeof toast==="function")toast(`Potrebuješ úroveň ${x.level}.`,"danger");return false}
  const old=state.equipment[slot]||null;state.equipment[slot]=x;inv.splice(Number(index),1);if(old)inv.push(old);
+ if(typeof closeItemModal==="function")closeItemModal();
  hpSanity039a32();if(typeof saveGame==="function")saveGame();if(typeof render==="function")render();return true;
 }
 if(typeof equipItem==="function")equipItem=equip039a32;
