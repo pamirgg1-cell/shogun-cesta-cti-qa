@@ -75,3 +75,10 @@ const artContext = vm.createContext({
 vm.runInContext(artObserver[2], artContext);
 assert.equal(replacements, 0, 'Existing atlas SVG must not be replaced by fallback image');
 console.log('PASS: equipment artwork preserves atlas SVG and avoids observer replacement loop');
+const equippedPredicate = html.match(/function isEquipped039a27\(x\)\{[^\n]+/);
+vm.runInContext(equippedPredicate[0], equipmentContext);
+equipmentContext.state.equipment.weapon.id = 'SWP-001';
+assert.equal(equipmentContext.isEquipped039a27(equipmentContext.state.equipment.weapon), true);
+assert.equal(equipmentContext.isEquipped039a27({id:'SWP-001'}), false, 'A second copy is not the equipped instance');
+assert.equal(equipmentContext.isEquipped039a27(null), false);
+console.log('PASS: duplicate catalog IDs do not mark backpack items as equipped');
