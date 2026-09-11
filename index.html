@@ -6795,7 +6795,7 @@ function itemBadges034(x){
 }
 function itemUpgrade034(x){
  if(!x?.slot)return false;const old=state.equipment?.[x.slot];if(!old)return true;
- const a=statVector034(x),b=statVector034(old);
+ const a=equipmentVectorA76(x),b=equipmentVectorA76(old);
  let score=z=>z.Strength*10+z.Dexterity*4+z.Defense*5+z.Skill*5+z.Charisma*2+z.dmg*10+z.armor*5+z.hp*.3+z.critChance*12+z.critDamage*2+z.blockChance*10+z.regen*10+z.honor;
  return score(a)>score(b);
 }
@@ -12742,6 +12742,11 @@ body.pc55 #equipmentGrid .slot.empty>.small{top:0!important;bottom:0!important;b
 
 <script id="a76-equipment-details">
 // Display-only weapon contribution: combat applies a 90–110% spread to dmg * 10.
+function equipmentVectorA76(x){
+ const v={Strength:0,Dexterity:0,Defense:0,Skill:0,Charisma:0,dmg:0,armor:0,hp:0,critChance:0,critDamage:0,blockChance:0,regen:0,honor:0};
+ for(const k of Object.keys(v))v[k]=['Strength','Dexterity','Defense','Skill','Charisma'].includes(k)?Number(x?.stats?.[k])||0:Number(x?.[k])||0;
+ return v;
+}
 function weaponRangeA76(x){
  const damage=Math.max(0,Number(x?.dmg)||0)*10;
  return {min:Math.floor(damage*.9),max:Math.floor(damage*1.1)};
@@ -12789,7 +12794,7 @@ openItemDetail=function(source,i){
 };
 function openEquippedA76(slot){
  const x=state.equipment?.[slot];if(!x)return;
- document.getElementById("itemDetail").innerHTML=`<div class="item-art-detail033a64"><div class="item-art-detail-media033a64">${itemArtDetailHTML033a64(x)}</div><div class="item-art-detail-copy033a64"><h3>${escArt033a64(x.name)}</h3><div>AKTUÁLNE NASADENÉ · ${escArt033a64(slotNames[slot]||slot)}</div><div>Úroveň: ${Math.round(x.level||1)}</div>${itemBadges034(x)}<div class="item-meta">${itemBonuses(x)}</div>${setProgressHTML034(x)}</div></div>`;
+ document.getElementById("itemDetail").innerHTML=`<div class="item-art-detail033a64"><div class="item-art-detail-media033a64">${itemArtDetailHTML033a64(x)}</div><div class="item-art-detail-copy033a64"><h3>${escArt033a64(x.name)}</h3><div>AKTUÁLNE NASADENÉ · ${escArt033a64(slotNames[slot]||slot)}</div><div>Úroveň: ${Math.round(x.level||1)}</div><div class="item-meta">${itemBonuses(x)}</div></div></div>`;
  document.getElementById("itemModal").classList.remove("hidden");
 }
 const equipmentBeforeA76=renderEquipment;
