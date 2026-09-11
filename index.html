@@ -10647,7 +10647,7 @@ renderInventory=function(){
  if(sort==="name")rows.sort((a,b)=>String(a.x.name||"").localeCompare(String(b.x.name||""),"sk"));
  document.getElementById("inventoryCount").textContent=`${state.inventory.length} / ${cap}`;
  const fc=document.getElementById("invFilterCount034");if(fc)fc.textContent=`Zobrazené ${rows.length} / ${state.inventory.length}`;
- grid.innerHTML=rows.map(o=>inventoryCell039a27(o.x,o.i)).join("")+(rows.length?emptyCells(Math.max(0,Math.min(6,cap-rows.length))):'<div class="notice" style="grid-column:1/-1">Tomuto filtru nezodpovedá žiadny predmet.</div>');
+ grid.innerHTML=rows.length?rows.map(o=>inventoryCell039a27(o.x,o.i)).join(""):'<div class="notice inventory-empty-a73">Tomuto filtru nezodpovedá žiadny predmet.</div>';
 };
 
 // One final synchronization point. Older compatibility hooks remain callable, but visible HP has one canonical writer.
@@ -12689,6 +12689,7 @@ body.pc55 .inv-polish-toolbar034 select{min-height:40px!important;padding:0 34px
 body.pc55 .inv-polish-toolbar034 select:hover,body.pc55 .inv-polish-toolbar034 select:focus{border-color:#d0a35c!important;background:#241b18!important;outline:2px solid rgba(208,163,92,.18)!important;outline-offset:1px!important}
 body.pc55 #invFilterCount034{margin-left:auto!important;font-size:13px!important;color:#d7c39e!important;white-space:nowrap!important}
 body.pc55 #inventoryGrid.inventory-grid032c{grid-template-columns:repeat(auto-fill,minmax(128px,1fr))!important;gap:12px!important;padding:4px!important;align-content:start!important}
+body.pc55 #inventoryGrid.inventory-grid032c{border:0!important;background:transparent!important;box-shadow:none!important;min-height:0!important}
 body.pc55 #inventoryGrid .invcell{min-width:0!important;height:154px!important;padding:7px!important;border-color:#755a36!important;background:radial-gradient(circle at 50% 26%,#2a211c,#0b0e13 72%)!important;box-shadow:inset 0 0 0 1px rgba(231,193,123,.05)!important;overflow:hidden!important}
 body.pc55 #inventoryGrid .invcell:hover{border-color:#c49750!important;transform:translateY(-2px)!important;box-shadow:0 8px 18px rgba(0,0,0,.45),inset 0 0 18px rgba(194,143,64,.09)!important}
 body.pc55 #inventoryGrid .invcell .item-art-frame033a64{inset:7px 7px 45px!important}
@@ -12698,6 +12699,7 @@ body.pc55 #equipmentGrid .slot{height:116px!important;min-height:116px!important
 body.pc55 #equipmentGrid .slot .item-art-frame033a64{inset:7px 7px 39px!important}
 body.pc55 #equipmentGrid .slot .label,body.pc55 #equipmentGrid .slot>.small{position:absolute!important;left:4px!important;right:4px!important;bottom:4px!important;width:auto!important;min-height:30px!important;padding:6px 3px 3px!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:11px!important;line-height:1.16!important;white-space:normal!important;text-align:center!important;color:#e8d2aa!important;background:linear-gradient(transparent,rgba(0,0,0,.94))!important}
 body.pc55 #equipmentGrid .slot.empty>.small{top:0!important;bottom:0!important;background:none!important;color:#bba989!important;font-size:12px!important}
+body.pc55 .inventory-empty-a73{grid-column:1/-1!important;margin:0!important;padding:18px!important;border:1px dashed #59472f!important;background:rgba(12,14,18,.62)!important;color:#bfae91!important;font-size:13px!important;text-align:center!important}
 @media(max-width:900px){body.pc55 #inventoryOverlay032c{padding:12px!important}body.pc55 #inventoryGrid.inventory-grid032c{grid-template-columns:repeat(auto-fill,minmax(112px,1fr))!important;gap:9px!important}body.pc55 #invFilterCount034{width:100%!important;margin-left:0!important}body.pc55 .inv-polish-toolbar034 select{flex:1 1 145px!important}}
 @media(max-width:560px){body.pc55 #inventoryOverlay032c{padding:9px!important}body.pc55 #inventoryGrid.inventory-grid032c{grid-template-columns:repeat(2,minmax(0,1fr))!important}body.pc55 #inventoryGrid .invcell{height:145px!important}body.pc55 .inventory-overlay-note032c{font-size:12px!important}body.pc55 .inv-polish-toolbar034{gap:7px!important;padding:8px!important}body.pc55 .inv-polish-toolbar034 select{flex-basis:100%!important;width:100%!important}body.pc55 #equipmentGrid .slot{height:108px!important;min-height:108px!important}}
 </style>
