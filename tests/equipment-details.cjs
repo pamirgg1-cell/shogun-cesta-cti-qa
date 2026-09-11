@@ -6,7 +6,7 @@ const slot={style:{},setAttribute(){}};
 const detail={},modal={classList:{remove(){}}};
 const ctx={state:{equipment:{weapon:equipped}},itemBonuses:()=>'',canonicalSlot039a14:x=>x?.slot,
  statVector034:x=>({dmg:x?.dmg||0,Strength:x?.stats?.Strength||0}),escArt033a64:s=>String(s).replaceAll('<','&lt;'),
- renderEquipment(){},document:{querySelectorAll:()=>[{}, {},slot],getElementById:id=>id==='itemDetail'?detail:modal},
+ openItemDetail(){},renderEquipment(){},document:{querySelectorAll:()=>[{}, {},slot],getElementById:id=>id==='itemDetail'?detail:modal},
  itemArtDetailHTML033a64:()=>'',itemBadges034:()=>'',setProgressHTML034:()=>'',slotNames:{weapon:'Zbraň'},window:{}};
 vm.createContext(ctx);vm.runInContext(source,ctx);
 assert.equal(JSON.stringify(ctx.weaponRangeA76({dmg:2})),JSON.stringify({min:18,max:22}));
