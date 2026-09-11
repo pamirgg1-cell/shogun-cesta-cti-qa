@@ -12413,7 +12413,7 @@ itemArtMeta033a64=function(x){
 };
 function item59Sprite(src,classes='',label='Predmet'){
  const tile=ITEM59_TILES[src];if(!tile)return '';
- const [atlas,index,rows,cols=4]=tile,col=index%cols,row=Math.floor(index/cols),clip='item59clip'+(++item59Sequence),safe=function(v){return String(v==null?'':v).replace(/[&<>\"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}[c]})};
+ const [atlas,index,rows,cols=4]=tile,col=index%cols,row=Math.floor(index/cols),clip='item59clip'+(++item59Sequence),safe=function(v){return String(v==null?'':v)};
  return `<svg xmlns="http://www.w3.org/2000/svg" class="${safe(classes)} item59-sprite" viewBox="-3 -3 106 106" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${safe(label)}" data-item59-source="${safe(src)}"><title>${safe(label)}</title><defs><clipPath id="${clip}"><rect width="100" height="100"/></clipPath></defs><g clip-path="url(#${clip})"><image href="assets/item59/${atlas}.webp" x="${-col*100}" y="${-row*100}" width="${cols*100}" height="${rows*100}" preserveAspectRatio="none"/></g></svg>`;
 }
 const item59OldHTML=itemArtHTML033a64;
