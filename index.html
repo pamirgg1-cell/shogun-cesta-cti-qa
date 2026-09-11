@@ -12645,7 +12645,7 @@ body.pc55 #combatPage .pc55-enemy-art{filter:brightness(1.42) saturate(1.18) con
     const grid=document.getElementById('equipmentGrid');
     if(!grid) return;
     [...grid.children].forEach((slot,index)=>{
-      if(slot.classList.contains('empty') || slot.querySelector('img.equipped-art-a70')) return;
+      if(slot.classList.contains('empty') || slot.querySelector('.equipped-art-a70, svg.item59-sprite')) return;
       const label=slot.querySelector('.label');
       const name=(label?label.textContent:slot.textContent).trim();
       if(!name || /^(hlava|náhrdelník|zbraň|telo|ruky|nohy|prsteň|talizman|doplnok)$/i.test(name)) return;
