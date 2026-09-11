@@ -6866,28 +6866,7 @@ receiveItem=function(item,origin="Predmet"){
 };
 window.SHOGUN_LOOT_INVENTORY_POLISH_034={build:"0.3.6a03",comparison:true,setProgress:true,filters:true,rareProtection:true,directEquip:true,rareLootCallout:true};
 </script>
-<script id="item-art-registry-compat033a64">
-/* Runtime-safe registry for the active shop, inventory and equipment renderers. */
-var ITEM_ART_LIBRARY033a64=window.ITEM_ART_LIBRARY033a64||{};
-function plannedItemArtPath033a64(item){
-  const id=item&&item.visualId;
-  const known=id&&ITEM_ART_LIBRARY033a64[id];
-  if(known&&known.plannedPath)return known.plannedPath;
-  return null;
-}
-function itemArtMeta033a64(item){
-  const id=item&&item.visualId,known=id&&ITEM_ART_LIBRARY033a64[id];
-  return {visualId:id||null,src:(known&&known.src)||null,plannedPath:(known&&known.plannedPath)||plannedItemArtPath033a64(item),label:(known&&known.label)||(item&&item.name)||"Predmet"};
-}
-function escArt033a64(value){return String(value==null?"":value).replace(/[&<>"']/g,function(ch){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]})}
-function itemArtHTML033a64(item){
-  const meta=itemArtMeta033a64(item),fallback=escArt033a64((item&&item.icon)||"◆");
-  if(meta.src)return '<div class="item-art-frame033a64"><img class="item-art-img033a64" src="'+escArt033a64(meta.src)+'" alt="'+escArt033a64(meta.label)+'" loading="lazy" decoding="async"></div>';
-  return '<div class="item-art-frame033a64 item-art-planned033a64"><div class="item-art-fallback033a64">'+fallback+'</div></div>';
-}
-function itemArtDetailHTML033a64(item){return itemArtHTML033a64(item)}
-window.ITEM_ART_LIBRARY033a64=ITEM_ART_LIBRARY033a64;
-</script>
+
 
 
 
