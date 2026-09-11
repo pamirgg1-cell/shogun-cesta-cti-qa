@@ -56,3 +56,22 @@ assert.equal(equipmentContext.equip039a32(0), false);
 assert.equal(equipmentContext.state.equipment.weapon, newWeapon);
 assert.deepEqual(events, []);
 console.log('PASS: equipment swap closes stale detail; invalid and level-locked actions do not mutate equipment');
+const artObserver = scripts.find(([_, attributes]) => attributes.includes('id="a70-equipped-art-dom"'));
+assert.ok(artObserver);
+let replacements = 0;
+const slot = {
+  classList:{contains:()=>false, add:()=>{}},
+  querySelector:selector=>selector.includes('svg.item59-sprite') ? {} : null,
+  textContent:'Katana',
+  replaceChildren:()=>replacements++,
+};
+const grid = {children:[slot],dataset:{}};
+const artContext = vm.createContext({
+  document:{readyState:'complete',getElementById:()=>grid,createElement:()=>({})},
+  window:{addEventListener:()=>{}},
+  MutationObserver:class {observe() {}},
+  requestAnimationFrame:()=>{},
+});
+vm.runInContext(artObserver[2], artContext);
+assert.equal(replacements, 0, 'Existing atlas SVG must not be replaced by fallback image');
+console.log('PASS: equipment artwork preserves atlas SVG and avoids observer replacement loop');
