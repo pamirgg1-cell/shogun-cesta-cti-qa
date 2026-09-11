@@ -6,7 +6,7 @@ Total output lines: 12918
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Shogun — Cesta cti · 0.3.9a69 Equipment Art Runtime</title>
+<title>Shogun — Cesta cti · 0.3.9a70 Equipped Artwork</title>
 <style>
 :root{
   --wood:#24150f;--wood2:#3a2117;--wood3:#553323;--gold:#b58a3a;--gold2:#d8b96a;
@@ -12605,39 +12605,66 @@ body.pc55 #combatPage .pc55-enemy-art{filter:brightness(1.42) saturate(1.18) con
 })();
 </script>
 
-<script id="a69-equipped-art-runtime">
-/* ===== 0.3.9a68 — INDEPENDENT EQUIPMENT ART ===== */
+<script id="a70-equipped-art-dom">
+/* ===== 0.3.9a70 — EQUIPPED ART FROM VISIBLE SLOTS ===== */
 (function(){
-  const artById={
-    W001:'assets/items/weapons/katana_siveho_ronina.webp',W002:'assets/items/weapons/krvava_wakizashi.webp',W003:'assets/items/weapons/katana_akagane.webp',W004:'assets/items/weapons/katana_popraveneho_ronina.webp',W005:'assets/items/weapons/cepel_bambusoveho_tiena.webp',W006:'assets/items/weapons/cepel_mesacneho_svitu.webp',W007:'assets/items/weapons/kurogane_katana_bez_pana.webp',W008:'assets/items/weapons/cepel_bambusoveho_tiena.webp',W009:'assets/items/weapons/cepel_bambusoveho_tiena.webp',W010:'assets/items/weapons/cepel_cierneho_lotosu.webp',W011:'assets/items/weapons/cepel_tengu.webp',W012:'assets/items/weapons/katana_yomi.webp',W013:'assets/items/weapons/katana_cisarskeho_sumraku.webp',
-    H001:'assets/items/head/kabuto_hmlisteho_udolia.webp',H002:'assets/items/head/kabuto_akagane.webp',H003:'assets/items/head/maska_bezmenneho.webp',H004:'assets/items/head/kabuto_demona_akagane.webp',H005:'assets/items/head/maska_tengu.webp',H006:'assets/items/head/maska_krvaveho_mesiaca.webp',H007:'assets/items/head/kabuto_padleho_generala.webp',H008:'assets/items/head/maska_bezmenneho.webp',
-    A001:'assets/items/armor/osuchane_domaru.webp',A002:'assets/items/armor/domaru_horskej_straze.webp',A003:'assets/items/armor/haori_tengu.webp',A004:'assets/items/armor/domaru_akagane.webp',A005:'assets/items/armor/brnenie_zlomeneho_klanu.webp',A006:'assets/items/armor/domaru_yomi.webp',A007:'assets/items/armor/plast_posledneho_putnika.webp',A008:'assets/items/armor/domaru_cierneho_soguna.webp',
-    G001:'assets/items/hands/rukavice_bez_pana.webp',G002:'assets/items/hands/kote_akagane.webp',G003:'assets/items/hands/rukavice_yomi.webp',G004:'assets/items/hands/rukavice_cierneho_bambusu.webp',G005:'assets/items/hands/rukavice_popravy.webp',
-    B001:'assets/items/feet/sandale_vetra.webp',B002:'assets/items/feet/geta_horskeho_vetra.webp',B003:'assets/items/feet/geta_tengu.webp',B004:'assets/items/feet/sandale_ticheho_vraha.webp',B005:'assets/items/feet/suneate_akagane.webp',
-    R001:'assets/items/accessories/prsten_cervenej_pecate.webp',R002:'assets/items/accessories/pecat_siedmich_ciest.webp',R003:'assets/items/accessories/prsten_cierneho_slnka.webp'
-  };
-  const fallback={weapon:'assets/items/weapons/katana_siveho_ronina.webp',head:'assets/items/head/kabuto_hmlisteho_udolia.webp',body:'assets/items/armor/osuchane_domaru.webp',hands:'assets/items/hands/rukavice_bez_pana.webp',feet:'assets/items/feet/sandale_vetra.webp',ring:'assets/items/accessories/prsten_cervenej_pecate.webp',neck:'assets/items/accessories/amulet_cisarskej_krvi.webp',token:'assets/items/accessories/pecat_siedmich_ciest.webp',extra:'assets/items/accessories/pas_horskeho_putnika.webp'};
-  const slots=['head','neck','weapon','body','hands','feet','ring','token','extra'];
-  const labels={head:'Prilba',neck:'Náhrdelník',weapon:'Zbraň',body:'Brnenie',hands:'Rukavice',feet:'Obuv',ring:'Prsteň',token:'Talizman',extra:'Doplnok'};
-  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const source=x=>x&&(artById[x.id]||x.artSrc||x.src||x.image||x.artwork||fallback[x.slot]||fallback.weapon);
-  function drawEquipment(){
-    const grid=document.getElementById('equipmentGrid'); if(!grid||!window.state)return;
-    grid.innerHTML=slots.map(slot=>{
-      const x=state.equipment&&state.equipment[slot];
-      if(!x)return '<div class="slot empty"><div class="small">'+labels[slot]+'</div></div>';
-      return '<div class="slot rarity-'+esc(x.rarity||'common')+'" title="'+esc(x.name||labels[slot])+'"><img class="a68-equipped-art" src="'+esc(source(x))+'" alt="'+esc(x.name||labels[slot])+'" loading="eager"><div class="label rarity-text-'+esc(x.rarity||'common')+'">'+esc(x.name||labels[slot])+'</div></div>';
-    }).join('');
+  const fallback=[
+    'assets/items/head/kabuto_hmlisteho_udolia.webp',
+    'assets/items/accessories/amulet_cisarskej_krvi.webp',
+    'assets/items/weapons/katana_siveho_ronina.webp',
+    'assets/items/armor/osuchane_domaru.webp',
+    'assets/items/hands/rukavice_bez_pana.webp',
+    'assets/items/feet/sandale_vetra.webp',
+    'assets/items/accessories/prsten_cervenej_pecate.webp',
+    'assets/items/accessories/pecat_siedmich_ciest.webp',
+    'assets/items/accessories/pas_horskeho_putnika.webp'
+  ];
+  const named=[
+    [/katana|tachi|wakizashi|tonfa|čepeľ|meč|naginata|yari|kusarigama/i,'assets/items/weapons/katana_siveho_ronina.webp'],
+    [/kabuto|prilba|maska|menpo|jingasa/i,'assets/items/head/kabuto_hmlisteho_udolia.webp'],
+    [/yoroi|brnen|domaru|kimono|odev|plášť/i,'assets/items/armor/osuchane_domaru.webp'],
+    [/kote|rukavic|náramok/i,'assets/items/hands/rukavice_bez_pana.webp'],
+    [/sandál|topán|geta|obuvi/i,'assets/items/feet/sandale_vetra.webp'],
+    [/prsteň/i,'assets/items/accessories/prsten_cervenej_pecate.webp'],
+    [/amulet|náhrdel|medailón/i,'assets/items/accessories/amulet_cisarskej_krvi.webp'],
+    [/talizman|pečať|talisman/i,'assets/items/accessories/pecat_siedmich_ciest.webp']
+  ];
+  function pathFor(name,index){
+    const hit=named.find(([pattern])=>pattern.test(name));
+    return hit?hit[1]:(fallback[index]||fallback[8]);
   }
-  const style=document.createElement('style');
-  style.textContent='#equipmentGrid .slot{overflow:hidden;display:grid;place-items:center;padding:4px}#equipmentGrid .a68-equipped-art{width:100%;height:100%;min-height:54px;object-fit:contain;filter:drop-shadow(0 3px 3px #000);display:block}#equipmentGrid .slot .label{z-index:2;background:linear-gradient(transparent,rgba(4,4,4,.9) 40%);padding:9px 1px 1px;min-height:21px;color:#ead9af}';
-  document.head.appendChild(style);
-  window.renderEquipment=drawEquipment;
-  const oldRender=window.render;
-  if(typeof oldRender==='function')window.render=function(){const value=oldRender.apply(this,arguments);drawEquipment();return value};
-  drawEquipment();
-  window.SHOGUN_A69={build:'0.3.9a69',fix:'equipment renderer reads canonical game state'};
+  function paint(){
+    const grid=document.getElementById('equipmentGrid');
+    if(!grid) return;
+    [...grid.children].forEach((slot,index)=>{
+      if(slot.classList.contains('empty') || slot.querySelector('img.equipped-art-a70')) return;
+      const label=slot.querySelector('.label');
+      const name=(label?label.textContent:slot.textContent).trim();
+      if(!name || /^(hlava|náhrdelník|zbraň|telo|ruky|nohy|prsteň|talizman|doplnok)$/i.test(name)) return;
+      const img=document.createElement('img');
+      img.className='equipped-art-a70';
+      img.src=pathFor(name,index);
+      img.alt=name;
+      img.loading='eager';
+      img.onerror=()=>{ img.src=fallback[index]||fallback[8]; };
+      const text=document.createElement('div');
+      text.className='label';
+      text.textContent=name;
+      slot.replaceChildren(img,text);
+      slot.classList.add('has-equipment-art');
+      slot.title=name;
+    });
+  }
+  function schedule(){ requestAnimationFrame(paint); }
+  const begin=()=>{ paint(); const grid=document.getElementById('equipmentGrid'); if(grid && !grid.dataset.a70Observed){ grid.dataset.a70Observed='1'; new MutationObserver(schedule).observe(grid,{childList:true,subtree:true}); } };
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',begin,{once:true}); else begin();
+  window.addEventListener('shogun:render',schedule);
 })();
 </script>
+<style id="a70-equipped-art-style">
+#equipmentGrid .slot.has-equipment-art{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;overflow:hidden;padding:5px;background:radial-gradient(circle at 50% 20%,rgba(177,118,37,.28),rgba(14,10,8,.94) 72%)}
+#equipmentGrid .slot.has-equipment-art .equipped-art-a70{display:block;width:100%;height:72px;object-fit:contain;filter:drop-shadow(0 3px 5px rgba(0,0,0,.82))}
+#equipmentGrid .slot.has-equipment-art .label{display:block;width:100%;font-size:10px;line-height:1.12;text-align:center;color:#f1d7a0;text-shadow:0 1px 2px #000}
+</style>
 </body>
 </html>
