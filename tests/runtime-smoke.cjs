@@ -31,3 +31,28 @@ assert.ok(svg.includes('href="assets/item59/weapons.webp"'));
 assert.equal(context.item59Sprite('missing'), '');
 assert.notEqual(svg, context.item59Sprite('test', '" onclick="bad', '<script>bad</script>'), 'Clip IDs must be unique');
 console.log(`PASS: ${count} active scripts compile; DOCTYPE, escaping, fallback and SVG regression tests`);
+const equipSource = html.match(/function equip039a32\(index\)\{[\s\S]*?\n\}/);
+assert.ok(equipSource, 'Active equipment handler exists');
+const events = [];
+const oldWeapon = {slot:'weapon', name:'Old'};
+const newWeapon = {slot:'weapon', name:'New', level:1};
+const equipmentContext = vm.createContext({
+  state:{level:1, inventory:[newWeapon], equipment:{weapon:oldWeapon}},
+  closeItemModal:()=>events.push('close'),
+  hpSanity039a32:()=>events.push('health'),
+  saveGame:()=>events.push('save'),
+  render:()=>events.push('render'),
+});
+vm.runInContext(equipSource[0], equipmentContext);
+assert.equal(equipmentContext.equip039a32(0), true);
+assert.equal(equipmentContext.state.equipment.weapon, newWeapon);
+assert.equal(equipmentContext.state.inventory[0], oldWeapon);
+assert.deepEqual(events, ['close','health','save','render']);
+events.length = 0;
+assert.equal(equipmentContext.equip039a32(99), false);
+assert.deepEqual(events, []);
+equipmentContext.state.inventory = [{slot:'weapon',level:10}];
+assert.equal(equipmentContext.equip039a32(0), false);
+assert.equal(equipmentContext.state.equipment.weapon, newWeapon);
+assert.deepEqual(events, []);
+console.log('PASS: equipment swap closes stale detail; invalid and level-locked actions do not mutate equipment');
