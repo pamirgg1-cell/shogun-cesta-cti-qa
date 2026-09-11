@@ -12740,5 +12740,59 @@ body.pc55 #equipmentGrid .slot.empty>.small{top:0!important;bottom:0!important;b
 })();
 </script>
 
+<script id="a76-equipment-details">
+// Display-only weapon contribution: combat applies a 90–110% spread to dmg * 10.
+function weaponRangeA76(x){
+ const damage=Math.max(0,Number(x?.dmg)||0)*10;
+ return {min:Math.floor(damage*.9),max:Math.floor(damage*1.1)};
+}
+const bonusesBeforeA76=itemBonuses;
+itemBonuses=function(x){
+ const text=bonusesBeforeA76(x);
+ if(canonicalSlot039a14(x)!=="weapon")return text;
+ const r=weaponRangeA76(x);
+ return `<strong>Poškodenie zbrane: ${r.min}–${r.max}</strong><br><span class="small">Rozsah samotnej zbrane, bez atribútov postavy.</span><br>${text}`;
+};
+comparisonHTML034=function(x){
+ const slot=canonicalSlot039a14(x);if(!slot)return "";
+ const old=state.equipment?.[slot]||null;
+ if(old===x)return '<div class="item-compare034"><h4>AKTUÁLNE NASADENÉ</h4></div>';
+ const a=statVector034(x),b=statVector034(old);
+ const labels={Strength:"Sila",Dexterity:"Obratnosť",Defense:"Obrana",Skill:"Zručnosť",Charisma:"Charizma",dmg:"Poškodenie",armor:"Brnenie",hp:"Vitalita",critChance:"Kritická šanca",critDamage:"Kritické poškodenie",blockChance:"Blokovanie",regen:"Regenerácia",honor:"Česť"};
+ const signed=n=>(n>0?"+":"")+n;
+ let rows="";
+ if(slot==="weapon"){
+  const r=weaponRangeA76(x),s=weaponRangeA76(old);
+  rows+=`<div class="compare-row034"><span>Poškodenie zbrane</span><b>${s.min}–${s.max} → ${r.min}–${r.max}</b></div><div class="compare-row034"><span>Zmena minima / maxima</span><b>${signed(r.min-s.min)} / ${signed(r.max-s.max)}</b></div>`;
+ }
+ Object.keys(a).forEach(k=>{
+  if(k==="dmg"&&slot==="weapon")return;
+  const scale=k==="dmg"?10:k==="armor"?5:1;
+  const before=Math.round(b[k]*scale),after=Math.round(a[k]*scale),delta=after-before;
+  if(!before&&!after)return;
+  const suffix=["critChance","critDamage","blockChance","regen"].includes(k)?"%":"";
+  rows+=`<div class="compare-row034"><span>${labels[k]}</span><b class="${delta>0?'compare-up034':delta<0?'compare-down034':'compare-even034'}">${before}${suffix} → ${after}${suffix} (${signed(delta)}${suffix})</b></div>`;
+ });
+ return `<div class="item-compare034"><h4>NASADENÉ → VYBRANÉ · ${escArt033a64(old?.name||"prázdny slot")}</h4>${rows||"Bez zmeny"}</div>`;
+};
+function openEquippedA76(slot){
+ const x=state.equipment?.[slot];if(!x)return;
+ document.getElementById("itemDetail").innerHTML=`<div class="item-art-detail033a64"><div class="item-art-detail-media033a64">${itemArtDetailHTML033a64(x)}</div><div class="item-art-detail-copy033a64"><h3>${escArt033a64(x.name)}</h3><div>AKTUÁLNE NASADENÉ · ${escArt033a64(slotNames[slot]||slot)}</div><div>Úroveň: ${Math.round(x.level||1)}</div>${itemBadges034(x)}<div class="item-meta">${itemBonuses(x)}</div>${setProgressHTML034(x)}</div></div>`;
+ document.getElementById("itemModal").classList.remove("hidden");
+}
+const equipmentBeforeA76=renderEquipment;
+renderEquipment=function(){
+ const result=equipmentBeforeA76.apply(this,arguments);
+ const order=['head','neck','weapon','body','hands','feet','ring','token'];
+ document.querySelectorAll('#equipmentGrid > .slot').forEach((el,i)=>{
+  const slot=order[i];if(!state.equipment?.[slot])return;
+  el.setAttribute('role','button');el.tabIndex=0;el.style.cursor='pointer';
+  el.onclick=()=>openEquippedA76(slot);
+  el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openEquippedA76(slot)}};
+ });return result;
+};
+window.renderEquipment=renderEquipment;
+renderEquipment();
+</script>
 </body>
 </html>
