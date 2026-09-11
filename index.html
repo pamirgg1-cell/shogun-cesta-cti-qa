@@ -2992,10 +2992,10 @@ function dashboardDerived030(){
 function renderDashboardExtras030(){
   const d=dashboardDerived030();
   const byId=id=>document.getElementById(id);
-  if(byId('dashCrit'))byId('dashCrit').textContent=d.crit.toFixed(1)+'%';
+  if(byId('dashCrit'))byId('dashCrit').textContent=d.crit.toFixed(0)+'%';
   if(byId('dashCritDmg'))byId('dashCritDmg').textContent=Math.round(d.critDmg)+'%';
-  if(byId('dashBlock'))byId('dashBlock').textContent=d.block.toFixed(1)+'%';
-  if(byId('dashRegen'))byId('dashRegen').textContent=d.regen.toFixed(2)+'%';
+  if(byId('dashBlock'))byId('dashBlock').textContent=d.block.toFixed(0)+'%';
+  if(byId('dashRegen'))byId('dashRegen').textContent=d.regen.toFixed(0)+'%';
 
   const q=byId('dashboardQuests');
   if(q){
@@ -4477,13 +4477,13 @@ function syncAttributesPanel033a14(){
   ["OBRANA",state.defense??state.stats?.defense??d.defense??0],
   ["ZRUČNOSŤ",state.skill??state.stats?.skill??d.skill??0],
   ["CHARIZMA",state.charisma??state.stats?.charisma??d.charisma??0],
-  ["KRIT. ŠANCA",`${Number(d.critChance??0).toFixed(1)}%`],
+  ["KRIT. ŠANCA",`${Number(d.critChance??0).toFixed(0)}%`],
   ["KRIT. POŠKODENIE",`${Math.round(d.critDamage??150)}%`],
-  ["BLOK ŠANCA",`${Number(d.blockChance??0).toFixed(1)}%`],
-  ["REGENERÁCIA",`${Number(d.regen??0).toFixed(1)}%`]
+  ["BLOK ŠANCA",`${Number(d.blockChance??0).toFixed(0)}%`],
+  ["REGENERÁCIA",`${Number(d.regen??0).toFixed(0)}%`]
  ];
  const host=document.getElementById("attrRows033a14");
- if(host)host.innerHTML=rows.map(([k,v])=>`<div class="attr-row033a14"><span class="attr-label033a14">${k}</span><b>${v}</b></div>`).join("");
+ if(host)host.innerHTML=rows.map(([k,v])=>`<div class="attr-row033a14"><span class="attr-label033a14">${k}</span><b>${typeof v==="number"?Math.round(v):v}</b></div>`).join("");
  set("attrLevel033a14",state.level||1);
  set("attrXp033a14",`XP: ${Math.round(state.xp||0)} / ${Math.round((typeof xpNeed==="function"?xpNeed(state.level||1):100))}`);
 }
@@ -4513,13 +4513,13 @@ function syncAttributesPanel033a15(){
   ["OBRANA",a.Defense??0],
   ["ZRUČNOSŤ",a.Skill??0],
   ["CHARIZMA",a.Charisma??0],
-  ["KRIT. ŠANCA",`${(Number(d.critChance||0)*100).toFixed(1)}%`],
+  ["KRIT. ŠANCA",`${(Number(d.critChance||0)*100).toFixed(0)}%`],
   ["KRIT. POŠKODENIE",`${Math.round(Number(d.critDamage||1.5)*100)}%`],
-  ["BLOK ŠANCA",`${(Number(d.blockChance||0)*100).toFixed(1)}%`],
-  ["REGENERÁCIA",`${(Number(d.regen||0)*100).toFixed(1)}%`]
+  ["BLOK ŠANCA",`${(Number(d.blockChance||0)*100).toFixed(0)}%`],
+  ["REGENERÁCIA",`${(Number(d.regen||0)*100).toFixed(0)}%`]
  ];
  const host=document.getElementById("attrRows033a14");
- if(host)host.innerHTML=rows.map(([k,v])=>`<div class="attr-row033a14"><span class="attr-label033a14">${k}</span><b>${v}</b></div>`).join("");
+ if(host)host.innerHTML=rows.map(([k,v])=>`<div class="attr-row033a14"><span class="attr-label033a14">${k}</span><b>${typeof v==="number"?Math.round(v):v}</b></div>`).join("");
 
  set("attrLevel033a14",state.level||1);
  const need=(typeof xpNeed==="function")?xpNeed():100;
@@ -6377,10 +6377,10 @@ function synchronizeGameUI033a3(){
     set("hp",Math.floor(state.hp));set("maxhp",d.maxhp);
     set("damage",`${d.min.toLocaleString("sk-SK")}–${d.max.toLocaleString("sk-SK")}`);
     set("armor",d.armor);
-    set("dashCrit",(d.critChance*100).toFixed(1)+"%");
+    set("dashCrit",(d.critChance*100).toFixed(0)+"%");
     set("dashCritDmg",Math.round(d.critDamage*100)+"%");
-    set("dashBlock",(d.blockChance*100).toFixed(1)+"%");
-    set("dashRegen",(d.regen*100).toFixed(1)+"%");
+    set("dashBlock",(d.blockChance*100).toFixed(0)+"%");
+    set("dashRegen",(d.regen*100).toFixed(0)+"%");
   }
   if(typeof renderCharacterVisual032b==="function")renderCharacterVisual032b();
   if(activeWorkspace033a3)renderWorkspaceFeature033a3(activeWorkspace033a3);
