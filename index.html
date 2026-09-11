@@ -6,7 +6,7 @@ Total output lines: 12918
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Shogun — Cesta cti · 0.3.9a68 Equipment Art</title>
+<title>Shogun — Cesta cti · 0.3.9a69 Equipment Art Runtime</title>
 <style>
 :root{
   --wood:#24150f;--wood2:#3a2117;--wood3:#553323;--gold:#b58a3a;--gold2:#d8b96a;
@@ -2353,7 +2353,7 @@ body.workspace-active033a3 .dashboard-center{align-self:start}
 </main>
 </div>
 <footer>
-Shogun — Cesta cti · Build 0.3.9a68 · Equipment Art · bez Auth
+Shogun — Cesta cti · Build 0.3.9a69 · Equipment Art Runtime · bez Auth
 <div class="footer-actions"><button class="btn secondary" onclick="saveGame()">Uložiť</button><button class="btn secondary" onclick="resetGame()">Nová hra</button></div>
 </footer>
 </div>
@@ -12590,7 +12590,7 @@ body.pc55 #combatPage .pc55-enemy-art{filter:brightness(1.42) saturate(1.18) con
   function esc66(value){return String(value??'').replace(/[&<>"']/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]})}
   window.renderEquipment=function(){
     const grid=document.getElementById('equipmentGrid');
-    if(!grid||!window.state)return;
+    if(!grid||typeof state==='undefined')return;
     grid.innerHTML=order.map(function(slot){
       const item=state.equipment&&state.equipment[slot];
       if(!item)return '<div class="slot empty" title="'+names[slot]+'"><div class="small">'+names[slot]+'</div></div>';
@@ -12605,7 +12605,7 @@ body.pc55 #combatPage .pc55-enemy-art{filter:brightness(1.42) saturate(1.18) con
 })();
 </script>
 
-<script id="a68-independent-equipment-art">
+<script id="a69-equipped-art-runtime">
 /* ===== 0.3.9a68 — INDEPENDENT EQUIPMENT ART ===== */
 (function(){
   const artById={
@@ -12636,7 +12636,7 @@ body.pc55 #combatPage .pc55-enemy-art{filter:brightness(1.42) saturate(1.18) con
   const oldRender=window.render;
   if(typeof oldRender==='function')window.render=function(){const value=oldRender.apply(this,arguments);drawEquipment();return value};
   drawEquipment();
-  window.SHOGUN_A68={build:'0.3.9a68',fix:'independent equipment artwork renderer'};
+  window.SHOGUN_A69={build:'0.3.9a69',fix:'equipment renderer reads canonical game state'};
 })();
 </script>
 </body>
