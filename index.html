@@ -12775,6 +12775,18 @@ comparisonHTML034=function(x){
  });
  return `<div class="item-compare034"><h4>NASADENÉ → VYBRANÉ · ${escArt033a64(old?.name||"prázdny slot")}</h4>${rows||"Bez zmeny"}</div>`;
 };
+const detailBeforeA76=openItemDetail;
+openItemDetail=function(source,i){
+ const result=detailBeforeA76.apply(this,arguments),x=getItem(source,i);
+ const detail=document.getElementById('itemDetail');
+ if(x&&detail){
+  detail.querySelectorAll('.item-compare034').forEach(el=>el.remove());
+  const section=document.createElement('div');section.innerHTML=comparisonHTML034(x);
+  const actions=detail.querySelector('.item-actions');
+  if(actions)actions.before(section);else detail.appendChild(section);
+ }
+ return result;
+};
 function openEquippedA76(slot){
  const x=state.equipment?.[slot];if(!x)return;
  document.getElementById("itemDetail").innerHTML=`<div class="item-art-detail033a64"><div class="item-art-detail-media033a64">${itemArtDetailHTML033a64(x)}</div><div class="item-art-detail-copy033a64"><h3>${escArt033a64(x.name)}</h3><div>AKTUÁLNE NASADENÉ · ${escArt033a64(slotNames[slot]||slot)}</div><div>Úroveň: ${Math.round(x.level||1)}</div>${itemBadges034(x)}<div class="item-meta">${itemBonuses(x)}</div>${setProgressHTML034(x)}</div></div>`;
