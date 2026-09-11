@@ -6868,6 +6868,7 @@ window.SHOGUN_LOOT_INVENTORY_POLISH_034={build:"0.3.6a03",comparison:true,setPro
 </script>
 <script id="item-art-safe-fallback033a64">
 var ITEM_ART_LIBRARY033a64={};
+function escArt033a64(v){return String(v==null?"":v).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function itemArtMeta033a64(x){return {visualId:x&&x.visualId||null,src:null,label:x&&x.name||"Predmet"};}
 function itemArtHTML033a64(x){return '<div class="item-art-fallback033a64">'+String(x&&x.icon||"◆")+'</div>';}
 function itemArtDetailHTML033a64(x){return itemArtHTML033a64(x);}
