@@ -2147,17 +2147,17 @@ body.workspace-active033a3 .dashboard-center{align-self:start}
         </div>
         <div class="inventory-overlay-note032c">Klikni na predmet pre detail, porovnanie a dostupné akcie.</div>
 <div class="inv-polish-toolbar034" id="invPolishToolbar034">
-  <select id="invFilterSlot034" onchange="renderInventory()" title="Filter slotu">
+  <select id="invFilterSlot034" onchange="resetInventoryPageA74()" title="Filter slotu">
     <option value="all">Všetky sloty</option><option value="weapon">Zbrane</option><option value="head">Hlava</option>
     <option value="body">Brnenie</option><option value="hands">Ruky</option><option value="feet">Nohy</option>
     <option value="neck">Náhrdelníky</option><option value="ring">Prstene</option><option value="extra">Doplnky</option>
   </select>
-  <select id="invFilterRarity034" onchange="renderInventory()" title="Filter rarity">
+  <select id="invFilterRarity034" onchange="resetInventoryPageA74()" title="Filter rarity">
     <option value="all">Všetky rarity</option><option value="common">Common</option><option value="uncommon">Uncommon</option>
     <option value="rare">Rare</option><option value="epic">Epic</option><option value="legendary">Legendary</option>
     <option value="set">Set</option><option value="unique">Unique</option><option value="relic">Relic</option>
   </select>
-  <select id="invSort034" onchange="renderInventory()" title="Triedenie">
+  <select id="invSort034" onchange="resetInventoryPageA74()" title="Triedenie">
     <option value="new">Pôvodné poradie</option><option value="level">Level ↓</option><option value="rarity">Rarita ↓</option>
     <option value="quality">Kvalita ↓</option><option value="name">Názov A–Z</option>
   </select>
@@ -2165,6 +2165,7 @@ body.workspace-active033a3 .dashboard-center{align-self:start}
 </div>
 
         <div class="inventory inventory-grid032c" id="inventoryGrid"></div>
+        <nav class="inventory-pagination-a74" id="inventoryPaginationA74" aria-label="Stránkovanie batohu"></nav>
       </div>
 
       <div id="workspaceOverlay033a3" class="workspace-overlay033a3 hidden">
@@ -10632,6 +10633,10 @@ function inventoryCell039a27(x,sourceIndex){
    <div class="label rarity-text-${x.rarity||"common"}">${escArt033a64(x.name||"Predmet")}</div>
  </div>`;
 }
+let inventoryPageA74=0;
+const INVENTORY_PAGE_SIZE_A74=10;
+function resetInventoryPageA74(){inventoryPageA74=0;renderInventory()}
+function setInventoryPageA74(page){inventoryPageA74=Math.max(0,Number(page)||0);renderInventory()}
 renderInventory=function(){
  const grid=document.getElementById("inventoryGrid");if(!grid)return;
  const cap=Number(state.inventoryCapacity||30);
@@ -10646,9 +10651,16 @@ renderInventory=function(){
  if(sort==="quality")rows.sort((a,b)=>(typeof rollScore039a09==="function"?rollScore039a09(b.x)-rollScore039a09(a.x):0));
  if(sort==="name")rows.sort((a,b)=>String(a.x.name||"").localeCompare(String(b.x.name||""),"sk"));
  document.getElementById("inventoryCount").textContent=`${state.inventory.length} / ${cap}`;
+ const pageCount=Math.max(1,Math.ceil(rows.length/INVENTORY_PAGE_SIZE_A74));
+ inventoryPageA74=Math.min(inventoryPageA74,pageCount-1);
+ const start=inventoryPageA74*INVENTORY_PAGE_SIZE_A74,pageRows=rows.slice(start,start+INVENTORY_PAGE_SIZE_A74);
  const fc=document.getElementById("invFilterCount034");if(fc)fc.textContent=`Zobrazené ${rows.length} / ${state.inventory.length}`;
- grid.innerHTML=rows.length?rows.map(o=>inventoryCell039a27(o.x,o.i)).join(""):'<div class="notice inventory-empty-a73">Tomuto filtru nezodpovedá žiadny predmet.</div>';
+ grid.innerHTML=pageRows.map(o=>inventoryCell039a27(o.x,o.i)).join("")+(pageRows.length?emptyCells(INVENTORY_PAGE_SIZE_A74-pageRows.length):'<div class="notice" style="grid-column:1/-1">Tomuto filtru nezodpovedá žiadny predmet.</div>');
+ const pager=document.getElementById("inventoryPaginationA74");
+ if(pager)pager.innerHTML=`<button type="button" onclick="setInventoryPageA74(${inventoryPageA74-1})" ${inventoryPageA74===0?'disabled':''} aria-label="Predchádzajúca strana">‹</button><span>STRANA <b>${inventoryPageA74+1}</b> / ${pageCount}</span><button type="button" onclick="setInventoryPageA74(${inventoryPageA74+1})" ${inventoryPageA74>=pageCount-1?'disabled':''} aria-label="Nasledujúca strana">›</button>`;
 };
+window.resetInventoryPageA74=resetInventoryPageA74;
+window.setInventoryPageA74=setInventoryPageA74;
 
 // One final synchronization point. Older compatibility hooks remain callable, but visible HP has one canonical writer.
 const render039a27base=render;
@@ -12688,8 +12700,7 @@ body.pc55 .inv-polish-toolbar034{display:flex!important;flex-wrap:wrap!important
 body.pc55 .inv-polish-toolbar034 select{min-height:40px!important;padding:0 34px 0 12px!important;border:1px solid #947143!important;border-radius:2px!important;background:#1a1718!important;color:#ead5ad!important;font:600 13px/1.2 Georgia,serif!important;letter-spacing:.15px!important;box-shadow:inset 0 0 0 1px #090a0d!important;color-scheme:dark!important}
 body.pc55 .inv-polish-toolbar034 select:hover,body.pc55 .inv-polish-toolbar034 select:focus{border-color:#d0a35c!important;background:#241b18!important;outline:2px solid rgba(208,163,92,.18)!important;outline-offset:1px!important}
 body.pc55 #invFilterCount034{margin-left:auto!important;font-size:13px!important;color:#d7c39e!important;white-space:nowrap!important}
-body.pc55 #inventoryGrid.inventory-grid032c{grid-template-columns:repeat(auto-fill,minmax(128px,1fr))!important;gap:12px!important;padding:4px!important;align-content:start!important}
-body.pc55 #inventoryGrid.inventory-grid032c{border:0!important;background:transparent!important;box-shadow:none!important;min-height:0!important}
+body.pc55 #inventoryGrid.inventory-grid032c{grid-template-columns:repeat(5,minmax(0,1fr))!important;grid-template-rows:repeat(2,154px)!important;grid-auto-rows:154px!important;gap:12px!important;width:100%!important;max-width:720px!important;max-height:none!important;padding:4px!important;align-content:start!important;overflow:hidden!important}
 body.pc55 #inventoryGrid .invcell{min-width:0!important;height:154px!important;padding:7px!important;border-color:#755a36!important;background:radial-gradient(circle at 50% 26%,#2a211c,#0b0e13 72%)!important;box-shadow:inset 0 0 0 1px rgba(231,193,123,.05)!important;overflow:hidden!important}
 body.pc55 #inventoryGrid .invcell:hover{border-color:#c49750!important;transform:translateY(-2px)!important;box-shadow:0 8px 18px rgba(0,0,0,.45),inset 0 0 18px rgba(194,143,64,.09)!important}
 body.pc55 #inventoryGrid .invcell .item-art-frame033a64{inset:7px 7px 45px!important}
@@ -12699,9 +12710,13 @@ body.pc55 #equipmentGrid .slot{height:116px!important;min-height:116px!important
 body.pc55 #equipmentGrid .slot .item-art-frame033a64{inset:7px 7px 39px!important}
 body.pc55 #equipmentGrid .slot .label,body.pc55 #equipmentGrid .slot>.small{position:absolute!important;left:4px!important;right:4px!important;bottom:4px!important;width:auto!important;min-height:30px!important;padding:6px 3px 3px!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:11px!important;line-height:1.16!important;white-space:normal!important;text-align:center!important;color:#e8d2aa!important;background:linear-gradient(transparent,rgba(0,0,0,.94))!important}
 body.pc55 #equipmentGrid .slot.empty>.small{top:0!important;bottom:0!important;background:none!important;color:#bba989!important;font-size:12px!important}
-body.pc55 .inventory-empty-a73{grid-column:1/-1!important;margin:0!important;padding:18px!important;border:1px dashed #59472f!important;background:rgba(12,14,18,.62)!important;color:#bfae91!important;font-size:13px!important;text-align:center!important}
-@media(max-width:900px){body.pc55 #inventoryOverlay032c{padding:12px!important}body.pc55 #inventoryGrid.inventory-grid032c{grid-template-columns:repeat(auto-fill,minmax(112px,1fr))!important;gap:9px!important}body.pc55 #invFilterCount034{width:100%!important;margin-left:0!important}body.pc55 .inv-polish-toolbar034 select{flex:1 1 145px!important}}
-@media(max-width:560px){body.pc55 #inventoryOverlay032c{padding:9px!important}body.pc55 #inventoryGrid.inventory-grid032c{grid-template-columns:repeat(2,minmax(0,1fr))!important}body.pc55 #inventoryGrid .invcell{height:145px!important}body.pc55 .inventory-overlay-note032c{font-size:12px!important}body.pc55 .inv-polish-toolbar034{gap:7px!important;padding:8px!important}body.pc55 .inv-polish-toolbar034 select{flex-basis:100%!important;width:100%!important}body.pc55 #equipmentGrid .slot{height:108px!important;min-height:108px!important}}
+.inventory-pagination-a74{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:12px;width:max-content;margin:13px auto 0;padding:5px;border:1px solid #5e4930;background:#0d1015;box-shadow:inset 0 0 0 1px #050607}
+.inventory-pagination-a74 button{width:42px;height:34px;border:1px solid #947143;background:linear-gradient(#2a2119,#15110f);color:#edcf95;font:700 22px/1 Georgia,serif;cursor:pointer}
+.inventory-pagination-a74 button:hover:not(:disabled){border-color:#d0a35c;background:#35271c;color:#fff2cf}
+.inventory-pagination-a74 button:disabled{opacity:.32;cursor:default}
+.inventory-pagination-a74 span{min-width:112px;text-align:center;color:#bdae93;font-size:11px;letter-spacing:1px}.inventory-pagination-a74 b{color:#f0d7a5;font-size:13px}
+@media(max-width:900px){body.pc55 #inventoryOverlay032c{padding:12px!important}body.pc55 #inventoryGrid.inventory-grid032c{gap:9px!important}body.pc55 #invFilterCount034{width:100%!important;margin-left:0!important}body.pc55 .inv-polish-toolbar034 select{flex:1 1 145px!important}}
+@media(max-width:560px){body.pc55 #inventoryOverlay032c{padding:9px!important;overflow:auto!important}body.pc55 #inventoryGrid.inventory-grid032c{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:repeat(5,145px)!important;grid-auto-rows:145px!important;overflow:hidden!important}body.pc55 #inventoryGrid .invcell{height:145px!important}body.pc55 .inventory-overlay-note032c{font-size:12px!important}body.pc55 .inv-polish-toolbar034{gap:7px!important;padding:8px!important}body.pc55 .inv-polish-toolbar034 select{flex-basis:100%!important;width:100%!important}body.pc55 #equipmentGrid .slot{height:108px!important;min-height:108px!important}}
 </style>
 
 <script id="a71-save-lifecycle">
