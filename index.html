@@ -10622,7 +10622,7 @@ function syncHealth039a27(){
  if(stateEl)stateEl.textContent=v.hp<=0?"Porazený":v.pct<25?"Kritické zranenie":v.pct<60?"Zranený":"Pripravený na boj";
  return v;
 }
-function isEquipped039a27(x){return Object.values(state.equipment||{}).some(v=>v===x||((v?.id&&x?.id)&&v.id===x.id))}
+function isEquipped039a27(x){return !!x&&Object.values(state.equipment||{}).some(v=>v===x)}
 function inventoryCell039a27(x,sourceIndex){
  const score=typeof rollScore039a09==="function"?Math.round(rollScore039a09(x)):(Number(x?.rollScore)||0);
  return `<div class="invcell rarity-${x.rarity||"common"}" onclick="openItemDetail('inventory',${sourceIndex})" title="${escArt033a64(x.name||'Predmet')}">
