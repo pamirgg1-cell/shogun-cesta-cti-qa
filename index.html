@@ -2630,8 +2630,8 @@ function sellItem(source,i){const arr=source==="inventory"?state.inventory:sourc
 function receiveItem(item,origin="Predmet"){const x=ensureItemData(item);if(state.inventory.length<state.inventoryCapacity){state.inventory.push(x);return {where:"bag",item:x}}if(state.loot.length<150){state.loot.push(x);return {where:"loot",item:x}}return {where:"full",item:x}}
 function renderFullStats(){
  const d=derived();
- document.getElementById("fullStats").innerHTML=primaryKeys.map(k=>`<div class="statrow"><span>${attrNames[k]}</span><b>${d.attrs[k]} <span class="small">(základ ${state.attrs[k]})</span></b></div>`).join("")+
- `<div class="statrow"><span>Poškodenie</span><b>${d.min.toLocaleString('sk-SK')}–${d.max.toLocaleString('sk-SK')}</b></div><div class="statrow"><span>Redukcia z Obrany</span><b>${(d.reduction*100).toFixed(1)}%</b></div><div class="statrow"><span>Presnosť</span><b>${(d.accuracy*100).toFixed(1)}%</b></div><div class="statrow"><span>Úhyb</span><b>${(d.dodge*100).toFixed(1)}%</b></div><div class="statrow"><span>Kritická šanca</span><b>${(d.critChance*100).toFixed(1)}% / 25%</b></div><div class="statrow"><span>Kritické poškodenie</span><b>${Math.round(d.critDamage*100)}% / 2000%</b></div><div class="statrow"><span>Blokovanie</span><b>${(d.blockChance*100).toFixed(1)}% · blok zníži zásah o 75%</b></div><div class="statrow"><span>Regenerácia</span><b>${(d.regen*100).toFixed(1)}% Max HP / kolo</b></div><div class="statrow"><span>Vitalita</span><b>${state.hp}/${d.maxhp}</b></div><div class="statrow"><span>Česť z výprav</span><b>×${(1+Math.min(1,d.attrs.Charisma/500)).toFixed(2)}</b></div>`;
+ document.getElementById("fullStats").innerHTML=primaryKeys.map(k=>`<div class="statrow"><span>${attrNames[k]}</span><b>${Math.round(d.attrs[k])} <span class="small">(základ ${Math.round(state.attrs[k])})</span></b></div>`).join("")+
+ `<div class="statrow"><span>Poškodenie</span><b>${Math.round(d.min).toLocaleString('sk-SK')}–${Math.round(d.max).toLocaleString('sk-SK')}</b></div><div class="statrow"><span>Redukcia z Obrany</span><b>${(d.reduction*100).toFixed(0)}%</b></div><div class="statrow"><span>Presnosť</span><b>${(d.accuracy*100).toFixed(0)}%</b></div><div class="statrow"><span>Úhyb</span><b>${(d.dodge*100).toFixed(0)}%</b></div><div class="statrow"><span>Kritická šanca</span><b>${(d.critChance*100).toFixed(0)}% / 25%</b></div><div class="statrow"><span>Kritické poškodenie</span><b>${Math.round(d.critDamage*100)}% / 2000%</b></div><div class="statrow"><span>Blokovanie</span><b>${(d.blockChance*100).toFixed(0)}% · blok zníži zásah o 75%</b></div><div class="statrow"><span>Regenerácia</span><b>${(d.regen*100).toFixed(0)}% Max HP / kolo</b></div><div class="statrow"><span>Vitalita</span><b>${Math.round(state.hp)}/${Math.round(d.maxhp)}</b></div><div class="statrow"><span>Česť z výprav</span><b>+${Math.round(Math.min(1,d.attrs.Charisma/500)*100)}%</b></div>`;
 }
 function renderLocationNav(){
  const locationNav=document.getElementById("locationNav");if(!locationNav)return;
@@ -3297,11 +3297,11 @@ function renderBattle031(){
  const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v};
  set("combatLocation031",b.location.name);set("combatRound031","Kolo "+b.round);
  set("combatEnemyName031",b.enemy.name);set("combatEnemySymbol031",b.enemy.symbol||"敵");
- set("combatPlayerHpText031",`${Math.floor(ph)} / ${pm}`);set("combatEnemyHpText031",`${Math.floor(eh)} / ${em}`);
+ set("combatPlayerHpText031",`${Math.floor(ph)} / ${Math.round(pm)}`);set("combatEnemyHpText031",`${Math.floor(eh)} / ${Math.round(em)}`);
  const pbar=document.getElementById("combatPlayerHp031"),ebar=document.getElementById("combatEnemyHp031");
  if(pbar)pbar.style.width=Math.max(0,Math.min(100,ph/pm*100))+"%";if(ebar)ebar.style.width=Math.max(0,Math.min(100,eh/em*100))+"%";
- set("combatPlayerStats031",`Útok ${d.min}–${d.max} · Obrana ${d.armor} · Krit ${(d.critChance*100).toFixed(1)}% · Blok ${(d.blockChance*100).toFixed(1)}%`);
- set("combatEnemyStats031",`${b.enemy.boss?"BOSS · ":""}Sila hrozby ${b.enemy.power} · Obrana ${b.enemy.defense}${b.enemy.mechanic?` · ${b.enemy.mechanic.name}`:""}`);
+ set("combatPlayerStats031",`Útok ${Math.round(d.min)}–${Math.round(d.max)} · Obrana ${Math.round(d.armor)} · Krit ${(d.critChance*100).toFixed(0)}% · Blok ${(d.blockChance*100).toFixed(0)}%`);
+ set("combatEnemyStats031",`${b.enemy.boss?"BOSS · ":""}Sila hrozby ${Math.round(b.enemy.power)} · Obrana ${Math.round(b.enemy.defense)}${b.enemy.mechanic?` · ${b.enemy.mechanic.name}`:""}`);
  const shell=document.getElementById("combatShell031");if(shell)shell.style.setProperty("--combat-bg",`url("${locationArtMap[b.location.id]}")`);
  updatePersistentHealthUI031();
 }
@@ -8059,10 +8059,10 @@ function syncUnifiedAttributes038a04(){
  const host=document.getElementById("attrRows033a14");
  if(!host)return;
  const a=d.attrs||{};
- const pct=v=>`${(Number(v||0)*100).toFixed(1)}%`;
+ const pct=v=>`${(Number(v||0)*100).toFixed(0)}%`;
  const rows=[
-   ["SILA",a.Strength??0],["OBRATNOSŤ",a.Dexterity??0],["OBRANA",a.Defense??0],
-   ["ZRUČNOSŤ",a.Skill??0],["CHARIZMA",a.Charisma??0],
+   ["SILA",Math.round(a.Strength??0)],["OBRATNOSŤ",Math.round(a.Dexterity??0)],["OBRANA",Math.round(a.Defense??0)],
+   ["ZRUČNOSŤ",Math.round(a.Skill??0)],["CHARIZMA",Math.round(a.Charisma??0)],
    ["ÚTOK",`${Math.round(Number(d.min||0))}–${Math.round(Number(d.max||0))}`],
    ["BRNENIE",Math.round(Number(d.armor||0))],
    ["KRIT. ŠANCA",pct(d.critChance)],["KRIT. POŠKODENIE",`${Math.round(Number(d.critDamage||1.5)*100)}%`],
