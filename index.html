@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 204110)
-Total output lines: 12918
-
 <!doctype html>
 <html lang="sk">
 <head>
@@ -6868,9 +6865,9 @@ window.SHOGUN_LOOT_INVENTORY_POLISH_034={build:"0.3.6a03",comparison:true,setPro
 </script>
 <script id="item-art-safe-fallback033a64">
 var ITEM_ART_LIBRARY033a64={};
-function escArt033a64(v){return String(v==null?"":v).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function escArt033a64(v){return String(v==null?"":v).replace(/[&<>"']/g,function(c){return "&#"+c.charCodeAt(0)+";";})}
 function itemArtMeta033a64(x){return {visualId:x&&x.visualId||null,src:null,label:x&&x.name||"Predmet"};}
-function itemArtHTML033a64(x){return '<div class="item-art-fallback033a64">'+String(x&&x.icon||"◆")+'</div>';}
+function itemArtHTML033a64(x){return '<div class="item-art-fallback033a64">'+escArt033a64(x&&x.icon||"◆")+'</div>';}
 function itemArtDetailHTML033a64(x){return itemArtHTML033a64(x);}
 </script>
 
@@ -12413,7 +12410,7 @@ itemArtMeta033a64=function(x){
 };
 function item59Sprite(src,classes='',label='Predmet'){
  const tile=ITEM59_TILES[src];if(!tile)return '';
- const [atlas,index,rows,cols=4]=tile,col=index%cols,row=Math.floor(index/cols),clip='item59clip'+(++item59Sequence),safe=function(v){return String(v==null?'':v)};
+ const [atlas,index,rows,cols=4]=tile,col=index%cols,row=Math.floor(index/cols),clip='item59clip'+(++item59Sequence),safe=escArt033a64;
  return `<svg xmlns="http://www.w3.org/2000/svg" class="${safe(classes)} item59-sprite" viewBox="-3 -3 106 106" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${safe(label)}" data-item59-source="${safe(src)}"><title>${safe(label)}</title><defs><clipPath id="${clip}"><rect width="100" height="100"/></clipPath></defs><g clip-path="url(#${clip})"><image href="assets/item59/${atlas}.webp" x="${-col*100}" y="${-row*100}" width="${cols*100}" height="${rows*100}" preserveAspectRatio="none"/></g></svg>`;
 }
 const item59OldHTML=itemArtHTML033a64;
