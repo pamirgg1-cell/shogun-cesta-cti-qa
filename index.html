@@ -12817,5 +12817,41 @@ renderEquipment=function(){
 window.renderEquipment=renderEquipment;
 renderEquipment();
 </script>
+
+<script id="a78-unlimited-training">
+const trainingKeysA78=["Strength","Dexterity","Defense","Skill","Charisma"];
+function trainingCostA78(key){
+ if(!trainingKeysA78.includes(key))return Infinity;
+ const saved=state.trainingPricesA78?.[key];
+ if(Number.isSafeInteger(saved)&&saved>0)return saved;
+ return Math.max(1,Math.ceil(Number(state.attrs?.[key]||0)*.65));
+}
+function trainA78(key){
+ if(!trainingKeysA78.includes(key))return false;
+ const cost=trainingCostA78(key),next=Math.ceil(cost*1.5);
+ if(!Number.isSafeInteger(cost)||!Number.isSafeInteger(next)||Number(state.gold||0)<cost){toast("Nemáš dosť zlata na tréning.","danger");return false}
+ state.gold-=cost;
+ state.attrs[key]=Number(state.attrs[key]||0)+1;
+ state.trainingPricesA78=state.trainingPricesA78||{};
+ state.trainingPricesA78[key]=next;
+ saveGame(true);render();renderTrainingA78();return true;
+}
+function renderTrainingA78(){
+ const list=document.getElementById("trainingList");if(!list)return;
+ list.innerHTML='<div class="notice">Tréning bez limitu úrovne. Každý ďalší tréning rovnakého atribútu stojí o 50 % viac. Cena sa zaokrúhľuje nahor.</div>'+trainingKeysA78.map(key=>{
+ const value=Math.round(Number(state.attrs[key]||0)),cost=trainingCostA78(key);
+ return `<div class="statrow"><span><b>${attrNames[key]}</b><br><span class="small">Aktuálne: ${value} → ${value+1} · Cena: ${cost.toLocaleString("sk-SK")} zlata</span></span><button class="train" onclick="trainA78('${key}')" ${Number(state.gold||0)<cost?"disabled":""}>TRÉNOVAŤ</button></div>`;
+ }).join("");
+}
+trainingCost=trainingCostA78;
+trainingCost039a11=trainingCostA78;
+train=trainA78;
+buyTraining039a11=trainA78;
+buyTraining039a12=trainA78;
+trainingCap=()=>Infinity;
+const renderBeforeA78=render;
+render=function(){const result=renderBeforeA78.apply(this,arguments);renderTrainingA78();return result};
+renderTrainingA78();
+</script>
 </body>
 </html>
