@@ -12835,7 +12835,7 @@ function trainA78(key){
  state.trainingPricesA78=state.trainingPricesA78||{};
  state.trainingPricesA78[key]=next;
  const ledger=trainingLedger039a11();ledger.byStat[key]=Number(ledger.byStat[key]||0)+1;ledger.total=Number(ledger.total||0)+1;
- saveGame(true);render();renderTrainingA78();return true;
+ saveGame(true);render();if(typeof renderTraining039a12==='function')renderTraining039a12();renderTrainingA78();return true;
 }
 function renderTrainingA78(){
  const list=document.getElementById("trainingList");if(!list)return;
