@@ -12855,5 +12855,24 @@ window.DROP_ART_REGISTRY_A81=DROP_ART_REGISTRY_A81;window.enemyDropTierA81=enemy
   };
 })();
 </script>
+
+<style id="forge-item-layout-a83">
+/* Readable forge cards: the former fixed 72px artwork overflowed the five-column grid. */
+body.pc55 #forge021 .forge-a26{grid-template-columns:300px minmax(0,1fr)!important;gap:16px!important}
+body.pc55 #forge021 .forge-a26-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:9px!important;padding:14px!important;min-height:0!important}
+body.pc55 #forge021 .forge-a26-cell{aspect-ratio:1/1.28!important;padding:5px!important;display:grid!important;grid-template-rows:minmax(0,1fr) auto!important;align-items:center!important}
+body.pc55 #forge021 .forge-a26-cell .item-art-frame033a64{display:grid!important;place-items:center!important;width:100%!important;height:100%!important;min-height:0!important;overflow:hidden!important}
+body.pc55 #forge021 .forge-a26-cell .item59-sprite,
+body.pc55 #forge021 .forge-a26-cell .item60-fallback{width:min(64px,100%)!important;height:min(64px,100%)!important;min-width:0!important;min-height:0!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important}
+body.pc55 #forge021 .forge-a26-name{min-height:22px!important;margin-top:3px!important;white-space:normal!important;display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;overflow:hidden!important;font-size:9px!important}
+body.pc55 #forge021 .forge-a26-preview{grid-template-columns:96px minmax(0,1fr)!important}
+body.pc55 #forge021 .forge-a26-preview .item-art-frame033a64{display:grid!important;place-items:center!important;width:92px!important;height:92px!important;min-height:92px!important}
+body.pc55 #forge021 .forge-a26-preview .item59-sprite,
+body.pc55 #forge021 .forge-a26-preview .item60-fallback{width:88px!important;height:88px!important;min-width:0!important;min-height:0!important;object-fit:contain!important}
+body.pc55 #forge021 .forge-a26-row{display:grid!important;grid-template-columns:120px minmax(0,1fr)!important;align-items:start!important;gap:10px!important}
+body.pc55 #forge021 .forge-a26-row>b{text-align:right!important;line-height:1.28!important;overflow-wrap:anywhere!important}
+@media(max-width:1050px){body.pc55 #forge021 .forge-a26{grid-template-columns:1fr!important}body.pc55 #forge021 .forge-a26-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important}}
+@media(max-width:560px){body.pc55 #forge021 .forge-a26-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+</style>
 </body>
 </html>
