@@ -12445,6 +12445,9 @@ body.pc55 .forge-a26-detail .item-art-frame033a64{display:grid!important;place-i
 body.pc55 #heroScene033a9[data-avatar-art] .static-avatar-art033a91{background:radial-gradient(circle at 50% 35%,#3b4050 0,#101724 63%,#090c12 100%)!important}
 /* Keep the complete avatar inside the dashboard frame: never crop head or feet. */
 body.pc55 #heroScene033a9[data-avatar-art] .static-avatar-art033a91 img{object-fit:contain!important;object-position:center center!important;background:transparent!important}
+/* The full-body portrait is intentionally narrow. Match the central dashboard column
+   to its natural rendered width instead of leaving unused side bands around it. */
+@media(min-width:1451px){body.pc55 #overview.new-dashboard{grid-template-columns:minmax(220px,.8fr) 616px minmax(260px,1fr)!important}}
 body.pc55 #combatPage .enemy-combatant .combat-avatar-placeholder{background:#273344!important;box-shadow:0 0 0 1px #8a6a38,inset 0 0 30px #9e7d42!important}
 body.pc55 #combatPage .pc55-enemy-art{filter:brightness(1.42) saturate(1.18) contrast(1.06)!important}
 .a60-arena-summary{margin:12px 0;padding:10px 12px;border:1px solid #644a29;background:linear-gradient(90deg,#17100b,#25170e);font-size:11px;color:#d9c3a0}
