@@ -11,6 +11,11 @@ for(let i=0;i<10;i++)ctx.recordEnemyAchievementA80(location,0);
 assert.equal(ctx.achievementDataA80().kills['monks:0'],10);
 assert.equal(ctx.claimEnemyAchievementA80(0,0,0),true);
 assert.equal(ctx.state.gold,25);assert.equal(ctx.state.honor,1);
+assert.equal(ctx.achievementDataA80().activeTitle, '', 'claiming does not force a title');
+assert.equal(ctx.toggleAchievementTitleA80(0,0,0),true);
+assert.match(ctx.achievementDataA80().activeTitle,/Vlk/);
+assert.equal(ctx.toggleAchievementTitleA80(0,0,0),true);
+assert.equal(ctx.achievementDataA80().activeTitle, '');
 assert.match(host.innerHTML,/ÚSPECHY NEPRIATEĽOV/);assert.match(host.innerHTML,/1\/1/);
 assert(classes.has('achievement-frame-a80-1'));
 
@@ -28,6 +33,7 @@ for(let li=0;li<locations.length;li++)for(let ei=0;ei<4;ei++)for(let tier=0;tier
 }
 assert.equal(ctx.state.gold,expectedGold);assert.equal(ctx.state.honor,expectedHonor);
 assert.equal(Object.keys(ctx.achievementDataA80().claimed).length,480);
+assert.equal(ctx.toggleAchievementTitleA80(14,3,7),true);
 assert.match(ctx.achievementDataA80().activeTitle,/1000000/);
 assert(classes.has('achievement-frame-a80-4'));
 console.log('PASS: all 60 enemies and 480 achievement rewards grant the correct gold, honor, title and avatar frame');
