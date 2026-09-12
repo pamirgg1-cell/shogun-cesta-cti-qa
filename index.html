@@ -12986,58 +12986,45 @@ setTimeout(applyAchievementAuraA87,0);
 </style>
 
 <style id="achievement-aura-bands-a91">
-/* Achievement auras are deliberate, sharp top/bottom bands in the spare canvas around the hero art. */
-#heroScene033a9 .achievement-aura-a87{inset:0!important;z-index:20!important;opacity:1!important;mix-blend-mode:normal!important;overflow:hidden!important}
+/* Illustrated achievement auras derived from the four unlockable samurai motifs. */
+#heroScene033a9 .achievement-aura-a87{inset:0!important;z-index:20!important;opacity:1!important;mix-blend-mode:screen!important;overflow:hidden!important}
 #heroScene033a9 .achievement-aura-a87:before,
 #heroScene033a9 .achievement-aura-a87:after{
   content:"";position:absolute!important;left:0!important;right:0!important;inset-inline:0!important;
-  height:8.2%!important;min-height:28px!important;max-height:64px!important;
-  background-repeat:no-repeat!important;background-size:100% 100%!important;
-  filter:none!important;transform:none!important;opacity:1!important;
-  animation:auraBandShimmerA91 2.9s steps(2,end) infinite alternate!important;
+  height:17%!important;min-height:72px!important;max-height:136px!important;
+  background-repeat:no-repeat!important;background-position:center!important;background-size:cover!important;
+  filter:saturate(1.12) contrast(1.06)!important;transform:none!important;opacity:.93!important;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 18%,#000 78%,transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,transparent 0,#000 18%,#000 78%,transparent 100%)!important;
+  animation:auraBandShimmerA91 3.8s ease-in-out infinite alternate!important;
 }
-#heroScene033a9 .achievement-aura-a87:before{top:0!important;bottom:auto!important}
-#heroScene033a9 .achievement-aura-a87:after{top:auto!important;bottom:0!important;animation-delay:-1.4s!important}
+#heroScene033a9 .achievement-aura-a87:before{top:-1.5%!important;bottom:auto!important}
+#heroScene033a9 .achievement-aura-a87:after{top:auto!important;bottom:-1.5%!important;animation-delay:-1.9s!important}
 #heroScene033a9 .achievement-aura-a87 .aura-runes-a87{display:none!important}
-/* Every band uses crisp gradients, gems, embers and a solid ornamental edge — never a blurred overlay. */
+/* Each unlock uses its matching artwork: phoenix, spirit moon, crystal abyss, celestial dragon. */
 #heroScene033a9 .aura-phoenix-a87:before,
 #heroScene033a9 .aura-phoenix-a87:after{
- background-image:
- linear-gradient(to bottom,rgba(35,7,8,.98),rgba(94,16,10,.97) 45%,rgba(244,82,19,.98) 47%,rgba(255,193,52,.98) 53%,rgba(73,9,8,.98) 58%,rgba(12,8,10,.98)),
- radial-gradient(ellipse at 8% 52%,#fff1a2 0 3%,#f7a01d 4% 8%,transparent 9%),
- radial-gradient(ellipse at 23% 52%,#ffcf4b 0 2%,transparent 3%),radial-gradient(ellipse at 77% 52%,#ffcf4b 0 2%,transparent 3%),
- radial-gradient(ellipse at 92% 52%,#fff1a2 0 3%,#f7a01d 4% 8%,transparent 9%);
- border-bottom:1px solid #ffd166;box-shadow:inset 0 -1px #4f0808;
+ background-image:url('assets/auras/phoenix.webp')!important;
+ filter:saturate(1.18) contrast(1.08) drop-shadow(0 0 15px #ff551e)!important;
 }
 #heroScene033a9 .aura-spirit-a87:before,
 #heroScene033a9 .aura-spirit-a87:after{
- background-image:
- linear-gradient(to bottom,rgba(5,20,38,.98),rgba(12,65,105,.98) 45%,#81f4ff 47%,#e7ffff 53%,#1f76bd 58%,rgba(5,15,31,.99)),
- radial-gradient(ellipse at 8% 52%,#f7ffff 0 3%,#69dbff 4% 8%,transparent 9%),
- radial-gradient(circle at 25% 52%,#d1ffff 0 2%,transparent 3%),radial-gradient(circle at 75% 52%,#d1ffff 0 2%,transparent 3%),
- radial-gradient(ellipse at 92% 52%,#f7ffff 0 3%,#69dbff 4% 8%,transparent 9%);
- border-bottom:1px solid #b9ffff;box-shadow:inset 0 -1px #164b9b;
+ background-image:url('assets/auras/spirit.webp')!important;
+ filter:saturate(1.12) contrast(1.08) drop-shadow(0 0 16px #64dfff)!important;
 }
 #heroScene033a9 .aura-abyss-a87:before,
 #heroScene033a9 .aura-abyss-a87:after{
- background-image:
- linear-gradient(to bottom,rgba(20,7,37,.99),rgba(67,21,116,.98) 45%,#a957ff 47%,#f1bcff 53%,#6322b7 58%,rgba(16,7,32,.99)),
- linear-gradient(135deg,transparent 46%,#e5a7ff 47% 49%,transparent 50%) 15% 50%/52px 100% no-repeat,
- linear-gradient(45deg,transparent 46%,#e5a7ff 47% 49%,transparent 50%) 85% 50%/52px 100% no-repeat,
- radial-gradient(circle at 50% 52%,#f5ceff 0 2%,#b956ff 2.5% 5%,transparent 5.5%);
- border-bottom:1px solid #e7b5ff;box-shadow:inset 0 -1px #421376;
+ background-image:url('assets/auras/abyss.webp')!important;
+ filter:saturate(1.18) contrast(1.1) drop-shadow(0 0 17px #a64cff)!important;
 }
 #heroScene033a9 .aura-dragon-a87:before,
 #heroScene033a9 .aura-dragon-a87:after{
- background-image:
- linear-gradient(to bottom,rgba(5,22,43,.99),rgba(6,73,119,.98) 42%,#22dbff 45%,#ffe37b 50% 54%,#197cca 58%,rgba(4,15,33,.99)),
- linear-gradient(135deg,transparent 46%,#fce78b 47% 49%,transparent 50%) 15% 50%/56px 100% no-repeat,
- linear-gradient(45deg,transparent 46%,#fce78b 47% 49%,transparent 50%) 85% 50%/56px 100% no-repeat,
- radial-gradient(circle at 50% 52%,#fff8c2 0 2%,#3fe5ff 2.5% 5%,transparent 5.5%);
- border-bottom:1px solid #ffe98b;box-shadow:inset 0 -1px #125ea0;
+ background-image:url('assets/auras/dragon.webp')!important;
+ filter:saturate(1.14) contrast(1.08) drop-shadow(0 0 18px #36dcff)!important;
 }
 #heroScene033a9 .achievement-aura-a87:after{transform:scaleY(-1)!important}
-@keyframes auraBandShimmerA91{from{background-position:0 0,0 0,0 0,0 0,0 0}to{background-position:0 0,2px 0,-2px 0,2px 0,-2px 0}}
+@keyframes auraBandShimmerA91{from{opacity:.78;filter:saturate(1.02) contrast(1.02)}to{opacity:1;filter:saturate(1.25) contrast(1.1)}}
+@media(max-width:700px){#heroScene033a9 .achievement-aura-a87:before,#heroScene033a9 .achievement-aura-a87:after{height:14%!important;min-height:48px!important}}
 </style>
 </body>
 </html>
