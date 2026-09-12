@@ -12883,7 +12883,11 @@ const ACHIEVEMENT_TIERS_A80=[10,100,500,1000,5000,10000,100000,1000000];
 const ACHIEVEMENT_REWARDS_A80=[[25,1],[75,1],[180,2],[400,3],[850,5],[1600,7],[7500,20],[50000,100]];
 function achievementDataA80(){
  state.enemyAchievementsA80=state.enemyAchievementsA80&&typeof state.enemyAchievementsA80==="object"?state.enemyAchievementsA80:{kills:{},claimed:{},page:0,activeTitle:""};
- const d=state.enemyAchievementsA80;d.kills=d.kills&&typeof d.kills==="object"?d.kills:{};d.claimed=d.claimed&&typeof d.claimed==="object"?d.claimed:{};d.page=Math.max(0,Math.floor(Number(d.page)||0));return d;
+ const d=state.enemyAchievementsA80;d.kills=d.kills&&typeof d.kills==="object"?d.kills:{};d.claimed=d.claimed&&typeof d.claimed==="object"?d.claimed:{};
+ // Older saves only know whether an enemy was defeated. Preserve that real history
+ // as the first kill; exact repeat counts did not exist before this system.
+ if(!d.migratedLegacy){Object.keys(state.defeated||{}).forEach(key=>{if(state.defeated[key])d.kills[key]=Math.max(1,Math.floor(Number(d.kills[key])||0))});d.migratedLegacy=true}
+ d.page=Math.max(0,Math.floor(Number(d.page)||0));return d;
 }
 function achievementEnemyA80(location,index){return location.id+":"+index}
 function achievementFrameA80(){const d=achievementDataA80(),n=Object.keys(d.claimed).length;return n>=80?4:n>=35?3:n>=10?2:n>=1?1:0}
