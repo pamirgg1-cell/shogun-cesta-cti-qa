@@ -12824,5 +12824,36 @@ endgameDrop032=function(b){return Math.random()<(b.enemy?.boss?.50:.18)?rollEnem
 tryBossUnique031=function(){return null};
 window.DROP_ART_REGISTRY_A81=DROP_ART_REGISTRY_A81;window.enemyDropTierA81=enemyDropTierA81;window.rollEnemyDropA81=rollEnemyDropA81;
 </script>
+
+<script id="dismantle-final-a82">
+(function(){
+  function materialTextA82(y){
+    const names={iron:"Železo",leather:"Koža",essence:"Esencia",seal:"Pečať majstra"};
+    return Object.entries(y||{}).filter((entry)=>Number(entry[1])>0).map((entry)=>names[entry[0]]+" ×"+entry[1]).join(" · ")||"bez materiálu";
+  }
+  window.dismantleItem032=function(source,index){
+    const collections={inventory:state.inventory,storage:state.storage,loot:state.loot};
+    const items=collections[source],item=items&&items[index];
+    if(!item)return false;
+    if(item.rarity==="relic"){toast("Relikvie nemožno rozobrať.","danger");return false;}
+    const rare=["legendary","set","unique"].includes(item.rarity);
+    if(rare&&!confirm("Naozaj rozobrať: "+item.name+"?\n\nVzácny predmet. Táto akcia sa nedá vrátiť späť."))return false;
+    const yieldMap=typeof salvageYield034a02==="function"?salvageYield034a02(item):null;
+    if(!yieldMap||!Object.values(yieldMap).some((amount)=>Number(amount)>0)){toast("Tento predmet nemožno rozobrať.","danger");return false;}
+    if(typeof addMaterials034a02==="function")addMaterials034a02(yieldMap);
+    else {
+      state.materials=state.materials||{};
+      Object.entries(yieldMap).forEach((entry)=>{const key=entry[0],amount=entry[1];state.materials[key]=(Number(state.materials[key])||0)+Number(amount);});
+    }
+    items.splice(index,1);
+    try{saveGame(false);}catch(error){}
+    if(typeof closeItemModal==="function")closeItemModal();
+    toast("Rozobraté: "+item.name+" · "+materialTextA82(yieldMap),"success");
+    render();
+    if(typeof renderForge021==="function")renderForge021();
+    return true;
+  };
+})();
+</script>
 </body>
 </html>
