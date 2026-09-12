@@ -2542,8 +2542,10 @@ function toast(t,type=""){let e=document.getElementById("toast");e.textContent=t
 function activity(t){document.getElementById("activity").textContent=t}
 function xpNeed(){return state.level*100}
 function gainXP(n){state.xp+=n;while(state.xp>=xpNeed()){state.xp-=xpNeed();state.level++;state.maxhp+=10;state.hp=state.maxhp;toast(`Dosiahol si úroveň ${state.level}!`,"success")} }
-function trainingCost(k){let v=state.attrs[k];return Math.max(1,Math.ceil(v*.65))}
-function trainingCap(){if(state.level>=30)return 500;const t=(state.level-1)/29;return Math.floor(10+490*Math.pow(t,1.5))}
+// Compatibility helpers. The active training economy is installed at the end of
+// the document so every legacy entry point resolves to the same implementation.
+function trainingCost(k){return typeof trainingCostFinal==='function'?trainingCostFinal(k):Infinity}
+function trainingCap(){return Infinity}
 function equipmentStats(){
  let d=0,a=0,h=0,hp=0,critDamage=0,critChance=0,blockChance=0,regen=0,stats={Strength:0,Dexterity:0,Defense:0,Skill:0,Charisma:0};
  Object.values(state.equipment).forEach(x=>{if(x){d+=x.dmg||0;a+=x.armor||0;h+=x.honor||0;hp+=x.hp||0;critDamage+=x.critDamage||0;critChance+=x.critChance||0;blockChance+=x.blockChance||0;regen+=x.regen||0;Object.entries(x.stats||{}).forEach(([k,v])=>{if(stats[k]!=null)stats[k]+=Number(v)||0})}});
@@ -2572,15 +2574,11 @@ function render(){
  const combat=derived();document.getElementById("hp").textContent=state.hp;document.getElementById("maxhp").textContent=combat.maxhp;document.getElementById("hpbar").style.width=(state.hp/combat.maxhp*100)+"%";
  const d=combat;document.getElementById("damage").textContent=`${d.min}–${d.max}`;document.getElementById("armor").textContent=d.armor;
  document.getElementById("statsBox").innerHTML=Object.entries(state.attrs).map(([k,v])=>`<div class="statrow"><span>${attrNames[k]}</span><b>${v}</b></div>`).join("");
- document.getElementById("trainingList").innerHTML=Object.entries(state.attrs).map(([k,v])=>`<div class="statrow"><span><b>${attrNames[k]}</b><br><span class="small">Aktuálne: ${v} / ${trainingCap()} · ďalší tréning: ${trainingCost(k)} zlata</span></span><button class="train" onclick="train('${k}')">TRÉNOVAŤ</button></div>`).join("");
+ // Training owns its own workspace. Do not mount the retired level-capped panel here.
  renderEquipment();renderInventory();renderStorage();renderLoot();renderLocationNav();renderArena();renderWork();renderShop();renderFullStats();checkWork();
  saveGame(true);
 }
-function train(k){
- const cap=trainingCap();if(state.attrs[k]>=cap)return toast(`Tréningový strop pre úroveň ${state.level} je ${cap}.`,"danger");
- const c=trainingCost(k);if(state.gold<c)return toast("Nemáš dosť zlata na tréning.","danger");
- state.gold-=c;state.attrs[k]++;saveGame(true);toast(`${attrNames[k]} zvýšená na ${state.attrs[k]}.`,"success");render();
-}
+function train(k){return typeof trainFinal==='function'?trainFinal(k):false}
 function renderEquipment(){
  const order=["head","neck","weapon","body","hands","feet","ring","token","extra"];
  document.getElementById("equipmentGrid").innerHTML=order.map(slot=>{
@@ -9389,30 +9387,14 @@ function trainingLedger039a11(){
  return state.training039a11;
 }
 function trainingCost039a11(stat){
- const l=trainingLedger039a11(),key=String(stat||"Strength");
- const own=Number(l.byStat[key]||0),total=Number(l.total||0);
- const base=BALANCE039A11.training.base[key]||475;
- return Math.max(base,Math.round(base*Math.pow(BALANCE039A11.training.growth,own)*Math.pow(BALANCE039A11.training.globalGrowth,total)));
+ return typeof trainingCostFinal==='function'?trainingCostFinal(stat):Infinity;
 }
 function canTrain039a11(stat){return Number(state.gold||0)>=trainingCost039a11(stat)}
 function buyTraining039a11(stat){
- const key=String(stat||"Strength"),cost=trainingCost039a11(key);
- if(Number(state.gold||0)<cost){if(typeof toast==="function")toast("Na tréning potrebuješ "+cost.toLocaleString("sk-SK")+" zlata.","error");return false}
- state.attrs=state.attrs||{};
- state.gold-=cost;state.attrs[key]=Number(state.attrs[key]||0)+1;
- const l=trainingLedger039a11();l.byStat[key]=Number(l.byStat[key]||0)+1;l.total++;
- if(typeof saveGame==="function")saveGame();
- if(typeof render==="function")render();
- return true;
+ return typeof trainFinal==='function'?trainFinal(stat):false;
 }
 function trainingProjection039a11(stat,count=20){
- const key=String(stat||"Strength"),l=trainingLedger039a11(),own=Number(l.byStat[key]||0),total=Number(l.total||0),rows=[];
- for(let i=0;i<count;i++){
-   const base=BALANCE039A11.training.base[key]||475;
-   const cost=Math.round(base*Math.pow(BALANCE039A11.training.growth,own+i)*Math.pow(BALANCE039A11.training.globalGrowth,total+i));
-   rows.push({purchase:own+i+1,cost});
- }
- return rows;
+ return typeof trainingProjectionFinal==='function'?trainingProjectionFinal(stat,count):[];
 }
 
 // Normalize legacy names so the gate catches the weapon regardless of diacritics/case.
@@ -9527,10 +9509,10 @@ const EARLY_ECONOMY039A12={regions:["monks","tiktik","mist","bamboo","kuro"],bos
 const TRAINING_STATS039A12=[["Strength","Sila","Poškodenie"],["Dexterity","Obratnosť","Presnosť / úhyb"],["Defense","Obrana","Odolnosť"],["Skill","Zručnosť","Bojová technika"],["Charisma","Charizma","Ekonomika / česť"]];
 function attrValue039a12(key){const a=state.attrs||{},aliases={Strength:["Strength","strength","Sila","sila"],Dexterity:["Dexterity","dexterity","Obratnosť","obratnost"],Defense:["Defense","defense","Obrana","obrana"],Skill:["Skill","skill","Zručnosť","zrucnost"],Charisma:["Charisma","charisma","Charizma","charizma"]};for(const k of aliases[key]||[key])if(typeof a[k]==="number")return a[k];return 0}
 function setAttrValue039a12(key,v){state.attrs=state.attrs||{};const x=Object.keys(state.attrs).find(k=>k.toLowerCase()===key.toLowerCase());state.attrs[x||key]=v}
-function buyTraining039a12(stat){const cost=trainingCost039a11(stat);if(Number(state.gold||0)<cost){if(typeof toast==="function")toast("Potrebuješ "+cost.toLocaleString("sk-SK")+" zlata.","error");return false}state.gold=Number(state.gold||0)-cost;setAttrValue039a12(stat,attrValue039a12(stat)+1);const l=trainingLedger039a11();l.byStat[stat]=Number(l.byStat[stat]||0)+1;l.total=Number(l.total||0)+1;if(typeof saveGame==="function")saveGame();renderTraining039a12();if(typeof render==="function")render();return true}
+function buyTraining039a12(stat){return typeof trainFinal==='function'?trainFinal(stat):false}
 window.buyTraining039a11=buyTraining039a12;
 function trainingHost039a12(){return document.getElementById("trainingWorkspace")||document.querySelector('[data-workspace="training"]')||document.querySelector(".trainingWorkspace")||document.querySelector("#training")}
-function renderTraining039a12(){const host=trainingHost039a12();if(!host)return false;const gold=Number(state.gold||0);host.innerHTML=`<div class="trainingPanel039a12"><div class="trainingIntro039a12"><b>TRÉNING BEZ LIMITU</b><br>Každý atribút môžeš trénovať opakovane. Každý ďalší tréning rovnakého atribútu je o 50 % drahší. Cena sa zaokrúhľuje nahor. Zlato: <b>${gold.toLocaleString("sk-SK")}</b> · Tréningov: <b>${trainingLedger039a11().total||0}</b></div><div class="trainingGrid039a12">${TRAINING_STATS039A12.map(([key,label,desc])=>{const now=attrValue039a12(key),cost=trainingCost039a11(key),ok=gold>=cost;return `<div class="trainingCard039a12"><h4>${label}: ${now} → ${now+1}</h4><div class="trainingMeta039a12">${desc}<br>Ďalší tréning: <span class="trainingCost039a12">${cost.toLocaleString("sk-SK")} zlata</span></div><button class="trainingBuy039a12" ${ok?"":"disabled"} onclick="buyTraining039a12('${key}')">${ok?"TRÉNOVAŤ":"NEDOSTATOK ZLATA"}</button></div>`}).join("")}</div><div class="economyHint039a12">Bez hard capu. Čím viac trénuješ, tým viac sa oplatí postupovať do silnejších farm lokácií.</div></div>`;return true}
+function renderTraining039a12(){return typeof renderTrainingFinal==='function'?renderTrainingFinal():false}
 const ISHIMA_SOURCE039A12={location:"oni",boss:"Akuma",minLevel:20,item:"Čepeľ Ishima"};
 function ishimaSource039a12(){return {...ISHIMA_SOURCE039A12}}
 function earlyEconomyTelemetry039a12(){const t=telemetry039a02();t.earlyEconomy039a12=t.earlyEconomy039a12||{fights:0,gold:0,xp:0,seconds:0,byRegion:{}};return t.earlyEconomy039a12}
@@ -12818,41 +12800,80 @@ window.renderEquipment=renderEquipment;
 renderEquipment();
 </script>
 
-<script id="a78-unlimited-training">
-const trainingKeysA78=["Strength","Dexterity","Defense","Skill","Charisma"];
-function trainingCostA78(key){
- if(!trainingKeysA78.includes(key))return Infinity;
- const saved=state.trainingPricesA78?.[key];
- if(Number.isSafeInteger(saved)&&saved>0)return saved;
- return Math.max(1,Math.ceil(Number(state.attrs?.[key]||0)*.65));
+<script id="training-final">
+// One canonical training system. Legacy names below are compatibility wrappers only.
+const trainingKeysFinal=["Strength","Dexterity","Defense","Skill","Charisma"];
+const trainingBaseCostFinal=Object.freeze({Strength:450,Dexterity:450,Defense:500,Skill:475,Charisma:400});
+function trainingLedgerFinal(){
+ const ledger=trainingLedger039a11();
+ ledger.byStat=ledger.byStat&&typeof ledger.byStat==="object"?ledger.byStat:{};
+ ledger.total=Math.max(0,Math.floor(Number(ledger.total)||0));
+ return ledger;
 }
-function trainA78(key){
- if(!trainingKeysA78.includes(key))return false;
- const cost=trainingCostA78(key),next=Math.ceil(cost*1.5);
- if(!Number.isSafeInteger(cost)||!Number.isSafeInteger(next)||Number(state.gold||0)<cost){toast("Nemáš dosť zlata na tréning.","danger");return false}
- state.gold-=cost;
+function derivedTrainingCostFinal(key,purchases){
+ let cost=trainingBaseCostFinal[key];
+ for(let i=0;i<purchases;i++)cost=Math.ceil(cost*1.5);
+ return cost;
+}
+function trainingPricesFinal(){
+ state.trainingPricesA78=state.trainingPricesA78&&typeof state.trainingPricesA78==="object"?state.trainingPricesA78:{};
+ const ledger=trainingLedgerFinal();
+ trainingKeysFinal.forEach(key=>{
+   if(!Number.isFinite(Number(state.trainingPricesA78[key]))||Number(state.trainingPricesA78[key])<=0){
+     state.trainingPricesA78[key]=derivedTrainingCostFinal(key,Math.max(0,Math.floor(Number(ledger.byStat[key])||0)));
+   }
+ });
+ return state.trainingPricesA78;
+}
+function trainingCostFinal(key){
+ if(!trainingKeysFinal.includes(key))return Infinity;
+ return Math.ceil(Number(trainingPricesFinal()[key]));
+}
+function canTrainFinal(key){return trainingKeysFinal.includes(key)&&Number(state.gold||0)>=trainingCostFinal(key)}
+function trainingProjectionFinal(key,count=20){
+ if(!trainingKeysFinal.includes(key))return [];
+ let cost=trainingCostFinal(key),purchase=Math.max(0,Math.floor(Number(trainingLedgerFinal().byStat[key])||0)),rows=[];
+ for(let i=0;i<Math.max(0,Math.floor(count));i++){rows.push({purchase:purchase+i+1,cost});cost=Math.ceil(cost*1.5)}
+ return rows;
+}
+function trainFinal(key){
+ if(!trainingKeysFinal.includes(key))return false;
+ const cost=trainingCostFinal(key);
+ if(!Number.isFinite(cost)||cost<=0||Number(state.gold||0)<cost){toast("Nemáš dosť zlata na tréning.","danger");return false}
+ state.attrs=state.attrs&&typeof state.attrs==="object"?state.attrs:{};
+ state.gold=Number(state.gold||0)-cost;
  state.attrs[key]=Number(state.attrs[key]||0)+1;
- state.trainingPricesA78=state.trainingPricesA78||{};
- state.trainingPricesA78[key]=next;
- const ledger=trainingLedger039a11();ledger.byStat[key]=Number(ledger.byStat[key]||0)+1;ledger.total=Number(ledger.total||0)+1;
- saveGame(true);render();if(typeof renderTraining039a12==='function')renderTraining039a12();renderTrainingA78();return true;
+ trainingPricesFinal()[key]=Math.ceil(cost*1.5);
+ const ledger=trainingLedgerFinal();ledger.byStat[key]=Math.max(0,Math.floor(Number(ledger.byStat[key])||0))+1;ledger.total++;
+ if(typeof telemetry039a02==="function")telemetry039a02().training++;
+ saveGame(true);render();renderTrainingFinal();
+ toast(`${attrNames[key]} zvýšená na ${state.attrs[key]}.`,"success");
+ return true;
 }
-function renderTrainingA78(){
- const list=document.getElementById("trainingList");if(!list)return;
- list.innerHTML='<div class="notice">Tréning bez limitu úrovne. Každý ďalší tréning rovnakého atribútu stojí o 50 % viac. Cena sa zaokrúhľuje nahor.</div>'+trainingKeysA78.map(key=>{
- const value=Math.round(Number(state.attrs[key]||0)),cost=trainingCostA78(key);
- return `<div class="statrow"><span><b>${attrNames[key]}</b><br><span class="small">Aktuálne: ${value} → ${value+1} · Cena: ${cost.toLocaleString("sk-SK")} zlata</span></span><button class="train" onclick="trainA78('${key}')" ${Number(state.gold||0)<cost?"disabled":""}>TRÉNOVAŤ</button></div>`;
+function renderTrainingFinal(){
+ const list=document.getElementById("trainingList");if(!list)return false;
+ const gold=Number(state.gold||0),ledger=trainingLedgerFinal();
+ list.innerHTML=`<div class="notice"><b>TRÉNING BEZ LIMITU ÚROVNE</b><br>Každý nákup zvýši jeden atribút o +1. Cena rastie iba pre práve trénovaný atribút: +50 % po každom nákupe, zaokrúhlené nahor. Zlato: <b>${gold.toLocaleString("sk-SK")}</b> · Tréningov: <b>${ledger.total}</b></div>`+trainingKeysFinal.map(key=>{
+   const value=Math.round(Number(state.attrs?.[key]||0)),cost=trainingCostFinal(key),enabled=gold>=cost;
+   return `<div class="statrow"><span><b>${attrNames[key]}</b><br><span class="small">Aktuálne: ${value} → ${value+1} · Ďalšia cena: ${cost.toLocaleString("sk-SK")} zlata</span></span><button class="train" onclick="trainFinal('${key}')" ${enabled?"":"disabled"}>${enabled?"TRÉNOVAŤ":"NEDOSTATOK ZLATA"}</button></div>`;
  }).join("");
+ return true;
 }
-trainingCost=trainingCostA78;
-trainingCost039a11=trainingCostA78;
-train=trainA78;
-buyTraining039a11=trainA78;
-buyTraining039a12=trainA78;
+// All historic public handlers resolve to the one final implementation.
+function trainA78(key){return trainFinal(key)}
+function renderTrainingA78(){return renderTrainingFinal()}
+trainingCost=trainingCostFinal;
+trainingCost039a11=trainingCostFinal;
+canTrain039a11=canTrainFinal;
+train=trainFinal;
+buyTraining039a11=trainFinal;
+buyTraining039a12=trainFinal;
+renderTraining039a12=renderTrainingFinal;
 trainingCap=()=>Infinity;
-const renderBeforeA78=render;
-render=function(){const result=renderBeforeA78.apply(this,arguments);renderTrainingA78();return result};
-renderTrainingA78();
+window.trainFinal=trainFinal;window.renderTrainingFinal=renderTrainingFinal;window.trainingCostFinal=trainingCostFinal;
+const renderBeforeTrainingFinal=render;
+render=function(){const result=renderBeforeTrainingFinal.apply(this,arguments);renderTrainingFinal();return result};
+renderTrainingFinal();
 </script>
 </body>
 </html>
