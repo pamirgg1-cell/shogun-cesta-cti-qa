@@ -12889,5 +12889,54 @@ body.pc55 #overview.new-dashboard #heroScene033a9{width:616px!important;max-widt
   body.pc55 #overview.new-dashboard{grid-template-columns:1fr!important}
 }
 </style>
+
+<style id="achievement-auras-a87">
+/* Achievement auras occupy only the open sky and ground around the avatar. */
+#heroScene033a9 .achievement-aura-a87{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden;opacity:.96;mix-blend-mode:screen;mask-image:linear-gradient(to bottom,#000 0 21%,transparent 39% 66%,#000 84%);-webkit-mask-image:linear-gradient(to bottom,#000 0 21%,transparent 39% 66%,#000 84%)}
+#heroScene033a9 .achievement-aura-a87:before,#heroScene033a9 .achievement-aura-a87:after{content:"";position:absolute;inset:-18%;background-repeat:repeat-x;background-size:260px 160px;animation:auraDriftA87 8s linear infinite}
+#heroScene033a9 .achievement-aura-a87:after{inset:auto -14% -13%;height:38%;animation-duration:6s;animation-direction:reverse}
+#heroScene033a9 .achievement-aura-a87 .aura-runes-a87{position:absolute;inset:0;display:flex;justify-content:space-around;align-items:flex-start;padding-top:7%;font:700 23px/1 serif;letter-spacing:19px;opacity:.75;animation:auraFloatA87 3.8s ease-in-out infinite alternate}
+#heroScene033a9 .aura-phoenix-a87:before,#heroScene033a9 .aura-phoenix-a87:after{background-image:radial-gradient(ellipse at 50% 100%,#fff2a1 0 4%,#ff7a16 10%,#b8140f 25%,transparent 52%),radial-gradient(ellipse at 18% 100%,#ff3d20 0 5%,transparent 37%),radial-gradient(ellipse at 82% 100%,#ffbd31 0 4%,transparent 34%);filter:drop-shadow(0 0 15px #e73213)}
+#heroScene033a9 .aura-spirit-a87:before,#heroScene033a9 .aura-spirit-a87:after{background-image:radial-gradient(ellipse at 50% 100%,#f2ffff 0 4%,#8eeeff 12%,#298dff 27%,transparent 57%),radial-gradient(circle at 22% 72%,#a7ffff 0 2%,transparent 8%),radial-gradient(circle at 78% 69%,#cefaff 0 2%,transparent 9%);filter:drop-shadow(0 0 18px #55cfff)}
+#heroScene033a9 .aura-abyss-a87:before,#heroScene033a9 .aura-abyss-a87:after{background-image:conic-gradient(from 20deg at 50% 100%,transparent,#762eff 8%,transparent 15%,#db59ff 23%,transparent 31%,#5e2ed9 41%,transparent 52%);filter:drop-shadow(0 0 18px #a94cff)}
+#heroScene033a9 .aura-dragon-a87:before,#heroScene033a9 .aura-dragon-a87:after{background-image:radial-gradient(ellipse at 50% 100%,#fff4a8 0 3%,#ffd24d 9%,#0cd7ff 19%,#1260d6 29%,transparent 54%),conic-gradient(from 0deg at 50% 100%,transparent 0 8%,#ffd45b 12%,transparent 18%,#30d7ff 28%,transparent 37%,#ffad2f 46%,transparent 57%);filter:drop-shadow(0 0 22px #59dfff)}
+body.achievement-auras-off #heroScene033a9 .achievement-aura-a87{display:none!important}
+@keyframes auraDriftA87{to{background-position:260px 0}}@keyframes auraFloatA87{to{transform:translateY(14px) rotate(2deg);opacity:1}}
+.achievement87-aura-bar{display:flex;flex-wrap:wrap;gap:8px;padding:10px 11px;margin:10px 0;border:1px solid #5f421c;background:#10131c}.achievement87-aura-bar strong{color:#e6c66e;align-self:center;margin-right:auto}.achievement87-aura-bar button{font-size:10px}.achievement87-aura-bar button.active{border-color:#b98cff;box-shadow:0 0 12px #894dff88}.achievement87-aura-bar button:disabled{opacity:.42}.achievement87-aura-off{color:#aeb6c3}
+</style>
+<script id="achievement-auras-a87">
+/* Canonical replacement for achievement avatar frames. */
+const ACHIEVEMENT_AURAS_A87=[
+ {id:"phoenix",name:"Popolavý fénix",need:1,cls:"aura-phoenix-a87"},
+ {id:"spirit",name:"Mesiac duchov",need:10,cls:"aura-spirit-a87"},
+ {id:"abyss",name:"Priepasť rún",need:35,cls:"aura-abyss-a87"},
+ {id:"dragon",name:"Srdce nebeského draka",need:80,cls:"aura-dragon-a87"}
+];
+function achievementAuraDataA87(){const d=achievementDataA80();if(typeof d.activeAura!=="string")d.activeAura="";if(typeof d.aurasEnabled!=="boolean")d.aurasEnabled=true;return d}
+function achievementAuraLevelA87(){const n=Object.keys(achievementAuraDataA87().claimed||{}).length;return ACHIEVEMENT_AURAS_A87.filter(a=>n>=a.need).length}
+function achievementAuraA87(id){return ACHIEVEMENT_AURAS_A87.find(a=>a.id===id)}
+function applyAchievementAuraA87(){
+ document.body.classList.remove("achievement-frame-a80-1","achievement-frame-a80-2","achievement-frame-a80-3","achievement-frame-a80-4");
+ const d=achievementAuraDataA87(),hero=document.getElementById("heroScene033a9");if(!hero)return;
+ let aura=hero.querySelector(".achievement-aura-a87");if(!aura){aura=document.createElement("div");aura.className="achievement-aura-a87";aura.innerHTML='<span class="aura-runes-a87">✧ ᚱ ◈ ᚦ ✦</span>';hero.appendChild(aura)}
+ const selected=achievementAuraA87(d.activeAura),unlocked=selected&&achievementAuraLevelA87()>=ACHIEVEMENT_AURAS_A87.indexOf(selected)+1;
+ aura.className="achievement-aura-a87"+(unlocked?" "+selected.cls:"");aura.style.display=unlocked?"":"none";
+ document.body.classList.toggle("achievement-auras-off",!d.aurasEnabled);
+}
+function selectAchievementAuraA87(id){const d=achievementAuraDataA87(),a=achievementAuraA87(id);if(!a||achievementAuraLevelA87()<ACHIEVEMENT_AURAS_A87.indexOf(a)+1)return false;d.activeAura=d.activeAura===id?"":id;saveGame(true);applyAchievementAuraA87();renderAchievementsA80();return true}
+function toggleAchievementAurasA87(){const d=achievementAuraDataA87();d.aurasEnabled=!d.aurasEnabled;saveGame(true);applyAchievementAuraA87();renderAchievementsA80();return d.aurasEnabled}
+const achievementRenderA87=renderAchievementsA80;
+renderAchievementsA80=function(){
+ const r=achievementRenderA87.apply(this,arguments),host=document.getElementById("achievementsA80");if(!host)return r;const d=achievementAuraDataA87(),level=achievementAuraLevelA87();
+ const status=d.activeAura?(achievementAuraA87(d.activeAura)?.name||"Žiadna"):"Žiadna";
+ const head=host.querySelector(".achievement80-head>div:last-child");if(head)head.innerHTML=`Aury avatara: <b>Úroveň ${level}/4</b>`;
+ const controls=ACHIEVEMENT_AURAS_A87.map((a,i)=>`<button class="btn secondary ${d.activeAura===a.id?"active":""}" onclick="selectAchievementAuraA87('${a.id}')" ${level<i+1?"disabled":""}>${level<i+1?"🔒 ":""}${a.name}</button>`).join("");
+ const bar=document.createElement("div");bar.className="achievement87-aura-bar";bar.innerHTML=`<strong>Aktívna aura: ${status}</strong>${controls}<button class="btn secondary" onclick="toggleAchievementAurasA87()">${d.aurasEnabled?"VYPNÚŤ EFEKTY":"ZAPNÚŤ EFEKTY"}</button>`;host.querySelector(".achievement80-title")?.after(bar);return r;
+};
+const visualSettingsA87=visual53Settings;
+visual53Settings=function(){visualSettingsA87();const panel=document.getElementById("visual53Settings");if(!panel||panel.querySelector("#achievementAurasSettingA87"))return;const label=document.createElement("label");label.id="achievementAurasSettingA87";label.innerHTML='<input type="checkbox"> Magické aury avatara';panel.querySelector("p")?.after(label);label.querySelector("input").checked=achievementAuraDataA87().aurasEnabled;label.querySelector("input").onchange=e=>{const d=achievementAuraDataA87();d.aurasEnabled=e.target.checked;saveGame(true);applyAchievementAuraA87()};};
+applyAchievementFrameA80=applyAchievementAuraA87;achievementFrameA80=achievementAuraLevelA87;
+setTimeout(applyAchievementAuraA87,0);
+</script>
 </body>
 </html>
