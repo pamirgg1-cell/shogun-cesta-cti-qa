@@ -12938,5 +12938,37 @@ visual53Settings=function(){visualSettingsA87();const panel=document.getElementB
 applyAchievementFrameA80=applyAchievementAuraA87;achievementFrameA80=achievementAuraLevelA87;
 setTimeout(applyAchievementAuraA87,0);
 </script>
+
+<style id="retire-samurai-journal-a88">
+#journalPage,.journal038{display:none!important}
+</style>
+<script id="retire-samurai-journal-a88">
+/* Retire the superseded 0.3.8a04 Samurai Journal completely. */
+(function(){
+ function openAchievementsA88(){
+   const legacy=document.getElementById("journalPage");if(legacy)legacy.remove();
+   try{show("quests");}catch(_){}
+   try{renderAchievementsA80();}catch(_){}
+   return false;
+ }
+ function retireJournalA88(){
+   const legacy=document.getElementById("journalPage");if(legacy)legacy.remove();
+   document.querySelectorAll("#nav button,nav button").forEach(button=>{
+     if((button.textContent||"").trim().toUpperCase()==="DENNÍK"){
+       button.textContent="ÚSPECHY";button.setAttribute("aria-label","Úspechy");
+       button.onclick=function(event){if(event){event.preventDefault();event.stopImmediatePropagation()}return openAchievementsA88();};
+     }
+   });
+ }
+ window.renderJournal038=openAchievementsA88;
+ document.addEventListener("click",function(event){
+   const button=event.target&&event.target.closest&&event.target.closest("#nav button,nav button");
+   if(button&&(button.textContent||"").trim().toUpperCase()==="DENNÍK"){
+     event.preventDefault();event.stopImmediatePropagation();openAchievementsA88();
+   }
+ },true);
+ retireJournalA88();setTimeout(retireJournalA88,0);setTimeout(retireJournalA88,250);
+})();
+</script>
 </body>
 </html>
