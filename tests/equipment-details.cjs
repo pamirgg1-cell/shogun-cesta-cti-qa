@@ -5,7 +5,7 @@ const equipped={slot:'weapon',name:'Old <blade>',dmg:2,stats:{Strength:2}};
 const slot={style:{},setAttribute(){}};
 const detail={},modal={classList:{remove(){}}};
 const ctx={state:{equipment:{weapon:equipped}},itemBonuses:()=>'',canonicalSlot039a14:x=>x?.slot,
- statVector034:x=>({dmg:x?.dmg||0,Strength:x?.stats?.Strength||0}),escArt033a64:s=>String(s).replaceAll('<','&lt;'),
+ escArt033a64:s=>String(s).replaceAll('<','&lt;'),
  openItemDetail(){},renderEquipment(){},document:{querySelectorAll:()=>[{}, {},slot],getElementById:id=>id==='itemDetail'?detail:modal},
  itemArtDetailHTML033a64:()=>'',itemBadges034:()=>'',setProgressHTML034:()=>'',slotNames:{weapon:'Zbraň'},window:{}};
 vm.createContext(ctx);vm.runInContext(source,ctx);
