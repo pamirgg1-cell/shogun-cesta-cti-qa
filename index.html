@@ -12930,5 +12930,22 @@ function changeAchievementPageA80(delta){const d=achievementDataA80();d.page=Mat
 const finishBattleAchievementsA80=finishBattle031;finishBattle031=function(win){const b=activeBattle031,location=b&&(b.location||locations[b.li]),index=b&&b.ei,r=finishBattleAchievementsA80.apply(this,arguments);if(win&&location&&Number.isInteger(index)){recordEnemyAchievementA80(location,index);saveGame(true);if(activeWorkspace033a3==="quests")renderAchievementsA80()}return r};
 renderQuests021=renderAchievementsA80;window.renderAchievementsA80=renderAchievementsA80;window.claimEnemyAchievementA80=claimEnemyAchievementA80;window.toggleAchievementTitleA80=toggleAchievementTitleA80;window.changeAchievementPageA80=changeAchievementPageA80;setTimeout(()=>{applyAchievementFrameA80();renderAchievementsA80()},0);
 </script>
+<script id="drop-final-a81">
+// One canonical enemy-bound drop registry. It deliberately replaces legacy level/player-based rolls.
+const DROP_ART_REGISTRY_A81=(()=>{
+ const shop=Object.values(SHOP_CATALOG039A18).flat().filter(x=>x.slot&&SHOP_ART_ASSETS039A24[x.id]);
+ const end=[...lootPool032,...setItems032].filter(x=>ITEM_ART_BY_ITEM_ID033a65[x.id]);
+ const seen=new Set(),all=[...shop,...end].filter(x=>!seen.has(x.id)&&seen.add(x.id)).sort((a,b)=>(a.level||1)-(b.level||1)||String(a.id).localeCompare(String(b.id)));
+ return all.map((x,i)=>({base:x,tier:Math.min(60,1+Math.floor(i*60/all.length))}));
+})();
+function enemyDropTierA81(b){return Math.max(1,Math.min(60,(Number(b?.li)||0)*4+(Number(b?.ei)||0)+1))}
+function dropCandidatesA81(tier){const exact=DROP_ART_REGISTRY_A81.filter(x=>x.tier===tier);return exact.length?exact:DROP_ART_REGISTRY_A81.filter(x=>Math.abs(x.tier-tier)<=1)}
+function rollEnemyDropA81(b){const tier=enemyDropTierA81(b),pool=dropCandidatesA81(tier),entry=pool[Math.floor(Math.random()*pool.length)],x=clone(entry.base);x.level=tier;x.dropTierA81=tier;x.visualId=ITEM_ART_BY_ITEM_ID033a65[x.id]||x.visualId;return typeof ensureItemData==='function'?ensureItemData(x):x}
+// Compatibility entrypoints used by old combat generations now resolve to the same registry.
+randomLootForLevel=function(){return rollEnemyDropA81(activeBattle031)};
+endgameDrop032=function(b){return Math.random()<(b.enemy?.boss?.50:.18)?rollEnemyDropA81(b):null};
+tryBossUnique031=function(){return null};
+window.DROP_ART_REGISTRY_A81=DROP_ART_REGISTRY_A81;window.enemyDropTierA81=enemyDropTierA81;window.rollEnemyDropA81=rollEnemyDropA81;
+</script>
 </body>
 </html>
