@@ -9,6 +9,8 @@ vm.runInContext(source,ctx);
 assert.equal(ctx.achievementDataA80().kills['monks:1'],1, 'legacy defeated enemy becomes first recorded kill');
 for(let i=0;i<10;i++)ctx.recordEnemyAchievementA80(location,0);
 assert.equal(ctx.achievementDataA80().kills['monks:0'],10);
+ctx.renderAchievementsA80();
+assert.match(host.innerHTML,/VYZDVIHNÚŤ/, 'an unclaimed completed milestone remains claimable');
 assert.equal(ctx.claimEnemyAchievementA80(0,0,0),true);
 assert.equal(ctx.state.gold,25);assert.equal(ctx.state.honor,1);
 assert.equal(ctx.achievementDataA80().activeTitle, '', 'claiming does not force a title');
