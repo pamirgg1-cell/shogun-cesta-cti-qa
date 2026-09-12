@@ -12762,7 +12762,7 @@ comparisonHTML034=function(x){
  const slot=canonicalSlot039a14(x);if(!slot)return "";
  const old=state.equipment?.[slot]||null;
  if(old===x)return '<div class="item-compare034"><h4>AKTUÁLNE NASADENÉ</h4></div>';
- const a=statVector034(x),b=statVector034(old);
+ const a=equipmentVectorA76(x),b=equipmentVectorA76(old);
  const labels={Strength:"Sila",Dexterity:"Obratnosť",Defense:"Obrana",Skill:"Zručnosť",Charisma:"Charizma",dmg:"Poškodenie",armor:"Brnenie",hp:"Vitalita",critChance:"Kritická šanca",critDamage:"Kritické poškodenie",blockChance:"Blokovanie",regen:"Regenerácia",honor:"Česť"};
  const signed=n=>(n>0?"+":"")+n;
  let rows="";
