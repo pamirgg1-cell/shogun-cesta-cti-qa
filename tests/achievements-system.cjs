@@ -1,0 +1,14 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
+const html=fs.readFileSync(path.join(__dirname,'..','index.html'),'utf8');
+const source=html.match(/<script id="achievementA80">([\s\S]*?)<\/script>/)[1];
+const host={innerHTML:''},classes=new Set();
+const location={id:'monks',name:'Chrám mníchov',enemies:[['Vlk','狼',5],['Mních','僧',7],['Bandita','盗',3],['Boss','鬼',10]]};
+const ctx=vm.createContext({state:{gold:0,honor:0},locations:[location],document:{body:{classList:{remove:(...x)=>x.forEach(v=>classes.delete(v)),add:x=>classes.add(x)}},getElementById:id=>id==='achievementsA80'?host:null},toast:()=>{},saveGame:()=>true,render:()=>{},renderQuests021:()=>{},finishBattle031:()=>{},activeBattle031:null,activeWorkspace033a3:null,window:{},setTimeout:()=>{}});
+vm.runInContext(source,ctx);
+for(let i=0;i<10;i++)ctx.recordEnemyAchievementA80(location,0);
+assert.equal(ctx.achievementDataA80().kills['monks:0'],10);
+assert.equal(ctx.claimEnemyAchievementA80(0,0,0),true);
+assert.equal(ctx.state.gold,25);assert.equal(ctx.state.honor,1);
+assert.match(host.innerHTML,/ÚSPECHY NEPRIATEĽOV/);assert.match(host.innerHTML,/1\/1/);
+assert(classes.has('achievement-frame-a80-1'));
+console.log('PASS: enemy achievements persist progress, claim gold/honor, title and avatar frame');
