@@ -13056,5 +13056,44 @@ body.pc55 #locationEnemies .btn{min-height:30px!important;padding:5px 8px!import
  body.pc55 #locationEnemies{grid-template-columns:1fr!important}
 }
 </style>
+
+<style id="enemy-pages-a94">
+body.pc55 #workspaceHost033a3:has(#locationPage:not(.hidden)){overflow-y:auto!important}
+body.pc55 #locationPage #locationArt{height:48px!important;min-height:0!important;margin-bottom:6px!important}
+body.pc55 #locationPage .readiness037{padding:6px 9px!important;margin:4px 0!important}
+body.pc55 #workspaceHost033a3 #locationPage h2{padding:7px 10px!important;margin:0!important}
+body.pc55 #locationProgress{font-size:12px!important;line-height:1.35!important;margin:6px 0!important}
+.enemy-pages-a94{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px;background:#201b18;border:1px solid #a98048;margin:0 0 10px}
+.enemy-pages-a94 span{color:#f4d7a4;text-align:center;font-size:12px}
+body.pc55 #locationEnemies .visual53-encounter{grid-column:auto!important;grid-row:auto!important;display:flex!important;flex-direction:column!important;min-height:0!important}
+body.pc55 #locationEnemies .visual53-portrait{width:100%!important;height:150px!important;min-height:0!important;aspect-ratio:auto!important}
+body.pc55 #locationEnemies .encounter-copy{width:100%;align-self:stretch!important}
+body.pc55 #locationEnemies .small{color:#e0d3bf!important}
+body.pc55 #locationEnemies .enemy-page-hidden-a94{display:none!important}
+</style>
+<script id="enemy-pages-a94">
+(function(){
+ let currentLocation=null,currentPage=0;
+ function paint(){
+  const host=document.getElementById("locationEnemies");if(!host)return;
+  const cards=Array.from(host.querySelectorAll(".location-encounter"));
+  const count=Math.max(1,Math.ceil(cards.length/2));
+  currentPage=Math.max(0,Math.min(currentPage,count-1));
+  cards.forEach((card,i)=>card.classList.toggle("enemy-page-hidden-a94",Math.floor(i/2)!==currentPage));
+  let bar=document.getElementById("enemyPagesA94");
+  if(!bar){bar=document.createElement("nav");bar.id="enemyPagesA94";bar.className="enemy-pages-a94";bar.setAttribute("aria-label","Stránky nepriateľov");host.before(bar);}
+  bar.innerHTML='<button type="button" class="btn" '+(currentPage===0?'disabled':'')+'>← Späť</button><span aria-live="polite">Nepriatelia · '+(currentPage+1)+' / '+count+(currentPage===count-1?' · Boss':'')+'</span><button type="button" class="btn" '+(currentPage===count-1?'disabled':'')+'>Ďalej →</button>';
+  const buttons=bar.querySelectorAll("button");
+  buttons[0].onclick=()=>{currentPage--;paint()};
+  buttons[1].onclick=()=>{currentPage++;paint()};
+ }
+ const base=renderLocation;
+ renderLocation=function(i){
+  if(currentLocation!==i){currentLocation=i;currentPage=0;}
+  const result=base.apply(this,arguments);paint();return result;
+ };
+})();
+</script>
+
 </body>
 </html>
