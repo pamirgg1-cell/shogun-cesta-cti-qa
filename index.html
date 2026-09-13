@@ -13026,5 +13026,35 @@ setTimeout(applyAchievementAuraA87,0);
 @keyframes auraBandShimmerA91{from{opacity:.92}to{opacity:1}}
 @media(max-width:700px){#heroScene033a9 .achievement-aura-a87:before,#heroScene033a9 .achievement-aura-a87:after{height:14%!important;min-height:48px!important}}
 </style>
+<style id="compact-visible-enemies-a92">
+/* Keep all four location enemies visible at once on the desktop dashboard. */
+body.pc55 #workspaceHost033a3:has(#locationPage:not(.hidden)){overflow-y:hidden!important}
+body.pc55 #locationPage #locationArt{height:104px!important;margin-bottom:8px!important;filter:brightness(1.22) saturate(1.12)}
+body.pc55 #locationEnemies{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+body.pc55 #locationEnemies .visual53-encounter{
+ display:grid!important;grid-template-columns:104px minmax(0,1fr)!important;
+ grid-template-rows:auto!important;gap:10px!important;align-items:center!important;
+ min-height:142px!important;padding:8px!important;
+ background:linear-gradient(120deg,#302b2a,#171b21)!important;
+ border-color:#96764d!important;
+}
+body.pc55 #locationEnemies .visual53-encounter.location-boss{
+ background:linear-gradient(120deg,#51332c,#1d1c22)!important;border-color:#d09a57!important;
+}
+body.pc55 #locationEnemies .visual53-portrait{
+ width:104px!important;height:126px!important;aspect-ratio:auto!important;
+ box-shadow:inset 0 0 18px #d5a45b2e,0 0 10px #0008!important;
+}
+body.pc55 #locationEnemies .pc55-enemy-art{aspect-ratio:auto!important;filter:brightness(1.38) saturate(1.22) contrast(1.06)}
+body.pc55 #locationEnemies .encounter-copy{align-self:center!important}
+body.pc55 #locationEnemies .encounter-copy>b{font-size:14px!important;color:#f4d7a4!important}
+body.pc55 #locationEnemies .visual53-type{margin-bottom:4px!important;color:#e2bd7b!important}
+body.pc55 #locationEnemies .small{font-size:10px!important;line-height:1.3!important}
+body.pc55 #locationEnemies .btn{min-height:30px!important;padding:5px 8px!important;font-size:10px!important}
+@media(max-width:900px){
+ body.pc55 #workspaceHost033a3:has(#locationPage:not(.hidden)){overflow-y:auto!important}
+ body.pc55 #locationEnemies{grid-template-columns:1fr!important}
+}
+</style>
 </body>
 </html>
