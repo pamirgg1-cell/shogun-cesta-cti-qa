@@ -13091,5 +13091,52 @@ body.pc55 #combatSummary031 .c43-compare{padding:2px 4px!important;margin-top:2p
 body.pc55 #combatSummary031 .c43-actions{display:flex!important;gap:6px!important;margin-top:7px!important}
 body.pc55 #combatSummary031 .c43-actions .btn{flex:1 1 120px!important;min-width:0!important;width:auto!important;min-height:34px!important;font-size:10px!important;padding:6px!important;border-radius:4px!important}
 </style>
+<style id="enchanted-ui-a97">
+/* Ambient decoration stays inside side-panel headings; never intercepts input. */
+body.pc55{--magic-gold:#dcac61;--magic-ice:#87c5cf}
+body.pc55 .app{box-shadow:0 0 0 5px #07090d,0 0 0 6px #665034,0 0 65px #b96a1924!important}
+body.pc55 .dashboard-left .ornate-box,body.pc55 .dashboard-right .ornate-box{
+ background:radial-gradient(ellipse at 0 0,#6c472225,transparent 55%),radial-gradient(ellipse at 100% 100%,#39778718,transparent 60%),linear-gradient(125deg,#17181d,#0c1015)!important;
+ border-color:#a18251!important;box-shadow:inset 0 0 0 3px #121111,inset 0 0 24px #cf9a2910,0 0 17px #c8922612!important;
+}
+body.pc55 .dashboard-left .ornate-heading,body.pc55 .dashboard-right .ornate-heading{
+ position:relative;isolation:isolate;overflow:hidden;
+ background:linear-gradient(100deg,#352622,#19242d 60%,#342820)!important;
+ color:#ffe2a8!important;text-shadow:0 0 16px #efb54b50;letter-spacing:1.5px!important;
+}
+body.pc55 .dashboard-left .ornate-heading:before,body.pc55 .dashboard-right .ornate-heading:before{
+ content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
+ background:radial-gradient(circle at 8% 70%,#ffe4ad 0 1px,transparent 2px),radial-gradient(circle at 22% 38%,#eac478 0 1px,transparent 2px),radial-gradient(circle at 81% 60%,#b6f3ff 0 1px,transparent 2px),radial-gradient(circle at 94% 24%,#e9bf78 0 1px,transparent 2px);
+ animation:magicMotesA97 8s ease-in-out infinite alternate;
+}
+body.pc55 .dashboard-left .ornate-heading:after,body.pc55 .dashboard-right .ornate-heading:after{
+ content:"";position:absolute;bottom:0;left:15%;right:15%;height:1px;pointer-events:none;
+ background:linear-gradient(90deg,transparent,#ffd184,#b4eaff,transparent);box-shadow:0 0 9px #efbd58;
+}
+body.pc55 .dashboard-right .ornate-heading:before{animation-delay:-4s}
+body.pc55 .ornate-box:after{color:#f6d18a!important;text-shadow:0 0 8px #d79d46,0 0 15px #d79d4655}
+body.pc55 #nav button{transition:background .2s ease,box-shadow .2s ease!important}
+body.pc55 #nav button.active{box-shadow:inset 0 -2px #f4cc7d,inset 0 0 25px #e7a83a24,0 3px 12px #ce8b251c!important;text-shadow:0 0 12px #fac96e66}
+body.pc55 .quick-grid button,body.pc55 .dash-equip .slot{
+ transition:border-color .2s ease,box-shadow .2s ease,background .2s ease!important;
+}
+body.pc55 .quick-grid button{background:radial-gradient(ellipse at 50% 0,#86603c55,transparent 72%),linear-gradient(140deg,#24252b,#121820)!important}
+body.pc55 .pc55-action-mark{color:#f7cc79!important;text-shadow:0 0 14px #e8b25155}
+body.pc55 .dash-equip .slot{box-shadow:inset 0 0 15px #b9842215!important}
+body.pc55 .quick-grid button:hover:not(:disabled),body.pc55 .dash-equip .slot:hover{
+ border-color:#f2d090!important;box-shadow:inset 0 0 22px #e8ac322a,0 0 13px #dba34838!important;
+}
+body.pc55 .btn:hover:not(:disabled){box-shadow:inset 0 0 14px #ffd18435,0 0 10px #dba34838!important}
+body.pc55 button:focus-visible,body.pc55 .slot:focus-visible{outline:2px solid #b2e8f1!important;outline-offset:2px}
+body.pc55 .statrow:hover{background:#d6aa5010!important}
+body.pc55 .character-level{color:#ffe1a0!important;text-shadow:0 0 20px #e8b75345}
+@keyframes magicMotesA97{from{transform:translateY(7px);opacity:.35}to{transform:translateY(-6px);opacity:.85}}
+body.visual53-reduced .ornate-heading:before{animation:none!important;opacity:.45!important}
+body.visual53-reduced .quick-grid button,body.visual53-reduced .dash-equip .slot,body.visual53-reduced #nav button{transition:none!important}
+@media(prefers-reduced-motion:reduce){
+ body.pc55 .ornate-heading:before{animation:none!important;opacity:.45!important}
+ body.pc55 .quick-grid button,body.pc55 .dash-equip .slot,body.pc55 #nav button{transition:none!important}
+}
+</style>
 </body>
 </html>
