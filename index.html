@@ -13026,74 +13026,37 @@ setTimeout(applyAchievementAuraA87,0);
 @keyframes auraBandShimmerA91{from{opacity:.92}to{opacity:1}}
 @media(max-width:700px){#heroScene033a9 .achievement-aura-a87:before,#heroScene033a9 .achievement-aura-a87:after{height:14%!important;min-height:48px!important}}
 </style>
-<style id="compact-visible-enemies-a92">
-/* Keep all four location enemies visible at once on the desktop dashboard. */
-body.pc55 #workspaceHost033a3:has(#locationPage:not(.hidden)){overflow-y:hidden!important}
-body.pc55 #locationPage #locationArt{height:104px!important;margin-bottom:8px!important;filter:brightness(1.22) saturate(1.12)}
-body.pc55 #locationEnemies{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
-body.pc55 #locationEnemies .visual53-encounter{
- display:grid!important;grid-template-columns:104px minmax(0,1fr)!important;
- grid-template-rows:auto!important;gap:10px!important;align-items:center!important;
- min-height:142px!important;padding:8px!important;
- background:linear-gradient(120deg,#302b2a,#171b21)!important;
- border-color:#96764d!important;
-}
-body.pc55 #locationEnemies .visual53-encounter.location-boss{
- background:linear-gradient(120deg,#51332c,#1d1c22)!important;border-color:#d09a57!important;
-}
-body.pc55 #locationEnemies .visual53-portrait{
- width:104px!important;height:126px!important;aspect-ratio:auto!important;
- box-shadow:inset 0 0 18px #d5a45b2e,0 0 10px #0008!important;
-}
-body.pc55 #locationEnemies .pc55-enemy-art{aspect-ratio:auto!important;filter:brightness(1.38) saturate(1.22) contrast(1.06)}
-body.pc55 #locationEnemies .encounter-copy{align-self:center!important}
-body.pc55 #locationEnemies .encounter-copy>b{font-size:14px!important;color:#f4d7a4!important}
-body.pc55 #locationEnemies .visual53-type{margin-bottom:4px!important;color:#e2bd7b!important}
-body.pc55 #locationEnemies .small{font-size:10px!important;line-height:1.3!important}
-body.pc55 #locationEnemies .btn{min-height:30px!important;padding:5px 8px!important;font-size:10px!important}
-@media(max-width:900px){
- body.pc55 #workspaceHost033a3:has(#locationPage:not(.hidden)){overflow-y:auto!important}
- body.pc55 #locationEnemies{grid-template-columns:1fr!important}
-}
-</style>
-
-<style id="enemy-pages-a94">
+<style id="location-redesign-a95">
 body.pc55 #workspaceHost033a3:has(#locationPage:not(.hidden)){overflow-y:auto!important}
-body.pc55 #locationPage #locationArt{height:48px!important;min-height:0!important;margin-bottom:6px!important}
-body.pc55 #locationPage .readiness037{padding:6px 9px!important;margin:4px 0!important}
-body.pc55 #workspaceHost033a3 #locationPage h2{padding:7px 10px!important;margin:0!important}
-body.pc55 #locationProgress{font-size:12px!important;line-height:1.35!important;margin:6px 0!important}
-.enemy-pages-a94{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px;background:#201b18;border:1px solid #a98048;margin:0 0 10px}
-.enemy-pages-a94 span{color:#f4d7a4;text-align:center;font-size:12px}
-body.pc55 #locationEnemies .visual53-encounter{grid-column:auto!important;grid-row:auto!important;display:flex!important;flex-direction:column!important;min-height:0!important}
-body.pc55 #locationEnemies .visual53-portrait{width:100%!important;height:150px!important;min-height:0!important;aspect-ratio:auto!important}
-body.pc55 #locationEnemies .encounter-copy{width:100%;align-self:stretch!important}
-body.pc55 #locationEnemies .small{color:#e0d3bf!important}
-body.pc55 #locationEnemies .enemy-page-hidden-a94{display:none!important}
+body.pc55 #locationPage>.panel{background:#141a20!important}
+body.pc55 #locationPage>.panel:before{display:none!important}
+body.pc55 #locationPage #returnWorld039a05{margin:8px!important;min-height:30px!important;font-size:11px!important}
+body.pc55 #workspaceHost033a3 #locationPage h2{margin:0!important;padding:10px 14px!important;font-size:20px!important;background:linear-gradient(90deg,#453426,#202a30)!important;border-bottom:1px solid #b09160}
+body.pc55 #locationPage #locationArt,body.pc55 #locationIntro{display:none!important}
+body.pc55 #locationPage .readiness037{margin:0!important;padding:7px 12px!important;background:#20292e!important;border:0!important}
+body.pc55 #locationPage .readiness037>div:not(.head){display:none!important}
+body.pc55 #locationPage .readiness037 .head{font-size:11px!important}
+body.pc55 #locationPage .pad{padding:10px!important}
+body.pc55 #locationProgress{margin:0 0 9px!important;font-size:11px!important;line-height:1.4!important;color:#d4c7ae!important}
+body.pc55 #locationEnemies{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+body.pc55 #locationEnemies .visual53-encounter{
+ display:grid!important;grid-column:auto!important;grid-template-columns:84px minmax(0,1fr)!important;gap:10px!important;align-items:center!important;
+ margin:0!important;padding:10px!important;min-height:146px!important;opacity:1!important;filter:none!important;
+ background:linear-gradient(135deg,#343e43,#22282e)!important;border:1px solid #8e866e!important;border-radius:8px!important;box-shadow:0 3px 8px #0004!important;
+}
+body.pc55 #locationEnemies .visual53-encounter.location-boss{background:linear-gradient(135deg,#53382e,#29252b)!important;border:1px solid #e1ae58!important;box-shadow:inset 3px 0 #e1ae58!important}
+body.pc55 #locationEnemies .visual53-portrait{width:84px!important;height:112px!important;aspect-ratio:auto!important;max-height:none!important;border:1px solid #b5a17c!important;border-radius:5px!important}
+body.pc55 #locationEnemies .pc55-enemy-art{aspect-ratio:auto!important;filter:brightness(1.4) saturate(1.15)!important}
+body.pc55 #locationEnemies .encounter-copy{padding:0!important;min-width:0!important;max-width:none!important;overflow-wrap:anywhere}
+body.pc55 #locationEnemies .encounter-copy>b{font-size:14px!important;line-height:1.2!important;color:#fff0ce!important}
+body.pc55 #locationEnemies .visual53-type{font-size:9px!important;color:#dcc49c!important;margin:0 0 4px!important}
+body.pc55 #locationEnemies .small{font-size:10px!important;line-height:1.35!important;color:#ede0ca!important;margin:5px 0!important}
+body.pc55 #locationEnemies .defeated{display:block;font-size:10px!important;color:#b7d99b!important}
+body.pc55 #locationEnemies .boss-subtitle{display:none!important}
+body.pc55 #locationEnemies .boss-tag{font-size:9px!important;padding:2px!important}
+body.pc55 #locationEnemies .enemy-lock-note{display:block;font-size:10px!important;color:#dcc8a4!important}
+body.pc55 #locationEnemies .btn{width:100%!important;min-height:32px!important;padding:5px!important;font-size:11px!important;border-radius:4px!important;background:linear-gradient(#91603c,#59331f)!important}
+@media(max-width:600px){body.pc55 #locationEnemies{grid-template-columns:1fr!important}}
 </style>
-<script id="enemy-pages-a94">
-(function(){
- let currentLocation=null,currentPage=0;
- function paint(){
-  const host=document.getElementById("locationEnemies");if(!host)return;
-  const cards=Array.from(host.querySelectorAll(".location-encounter"));
-  const count=Math.max(1,Math.ceil(cards.length/2));
-  currentPage=Math.max(0,Math.min(currentPage,count-1));
-  cards.forEach((card,i)=>card.classList.toggle("enemy-page-hidden-a94",Math.floor(i/2)!==currentPage));
-  let bar=document.getElementById("enemyPagesA94");
-  if(!bar){bar=document.createElement("nav");bar.id="enemyPagesA94";bar.className="enemy-pages-a94";bar.setAttribute("aria-label","Stránky nepriateľov");host.before(bar);}
-  bar.innerHTML='<button type="button" class="btn" '+(currentPage===0?'disabled':'')+'>← Späť</button><span aria-live="polite">Nepriatelia · '+(currentPage+1)+' / '+count+(currentPage===count-1?' · Boss':'')+'</span><button type="button" class="btn" '+(currentPage===count-1?'disabled':'')+'>Ďalej →</button>';
-  const buttons=bar.querySelectorAll("button");
-  buttons[0].onclick=()=>{currentPage--;paint()};
-  buttons[1].onclick=()=>{currentPage++;paint()};
- }
- const base=renderLocation;
- renderLocation=function(i){
-  if(currentLocation!==i){currentLocation=i;currentPage=0;}
-  const result=base.apply(this,arguments);paint();return result;
- };
-})();
-</script>
-
 </body>
 </html>
